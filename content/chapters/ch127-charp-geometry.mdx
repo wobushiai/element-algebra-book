@@ -1,0 +1,115 @@
+---
+title: 第127章 代数几何进阶：特征p几何
+description: 深入理解正特征代数几何
+section: 1
+---
+
+# 第一百二十七章：代数几何进阶——特征 $p$ 几何
+
+> **本章导读**：特征 $p$ 代数几何与特征 $0$ 情形有显著不同，出现了许多独特的现象，如 Frobenius 映射、簇的提升问题等。本章将介绍特征 $p$ 几何的基本理论。
+
+---
+
+## 127.1 特征 $p$ 基础
+
+### 127.1.1 有限域
+
+**定义 127.1.1（有限域）**
+> 阶为 $q = p^n$ 的有限域 $\mathbb{F}_q$ 是特征 $p$ 的有限域。
+
+**命题 127.1.2**
+> $\mathbb{F}_q$ 是 Perfect 域，即 Frobenius 映射 $x \mapsto x^p$ 是双射。
+
+### 127.1.2 Frobenius 映射
+
+**定义 127.1.3（Frobenius 映射）**
+> 设 $X$ 是 $\mathbb{F}_p$ 上的概形。**绝对 Frobenius** $F: X \to X$ 在层上定义为：
+> $$F^\#: \mathcal{O}_X \to \mathcal{O}_X, \quad f \mapsto f^p$$
+
+**例子 127.1.4**
+> 在 $\mathbb{A}^1_{\mathbb{F}_p}$ 上，$F(x) = x^p$。
+
+---
+
+## 127.2 簇的提升
+
+### 127.2.1 提升问题
+
+**问题 127.2.1（提升）**
+> 给定特征 $p$ 的簇 $X_0$，是否存在特征 $0$ 的簇 $X$ 使得 $X \otimes \mathbb{F}_p \cong X_0$？
+
+### 127.2.2 提升的存在性
+
+**定理 127.2.2（Grothendieck 提升）**
+> 任意光滑有限型概形可以提升到 $W_2(k)$（第二 Witt 环）。
+
+**例子 127.2.3**
+> 椭圆曲线可以提升到特征 $0$。
+> 但高维簇可能无法提升。
+
+---
+
+## 127.3 p-可除群
+
+### 127.3.1 定义
+
+**定义 127.3.1（$p$-可除群）**
+> **$p$-可除群** 是 $p^n$ 阶点构成的系统 $(G_n, i_n)$，满足：
+> $$p: G_{n+1} \to G_n, \quad i_n: G_n \hookrightarrow G_{n+1}$$
+
+**例子 127.3.2**
+> - 椭圆曲线的 $p^n$  torsion 点
+> - $\mathbb{G}_m[p^n] = \mu_{p^n}$
+
+### 127.3.2 形式群
+
+**定义 127.3.3（形式群）**
+> **形式群** 是形式概形上的群结构，等价于局部环上的 Hopf 代数。
+
+---
+
+## 127.4 de Rham 上同调
+
+### 127.4.1 de Rham 复形
+
+**定义 127.4.1（de Rham 上同调）**
+> 设 $X$ 是特征 $p$ 上的光滑簇。**de Rham 上同调** 是：
+> $$H^n_{\text{dR}}(X) = \mathbb{H}^n(X, \Omega^\bullet_{X/\mathbb{F}_p})$$
+
+### 127.4.2 Hodge-de Rham 谱序列
+
+**定理 127.4.2（Hodge-de Rham 谱序列）**
+> 对光滑簇 $X$，存在谱序列：
+> $$E^{p,q}_1 = H^q(X, \Omega^p_{X/k}) \Rightarrow H^{p+q}_{\text{dR}}(X)$$
+
+---
+
+## 127.5 Cartier 理论
+
+### 127.5.1 Cartier 算子
+
+**定理 127.5.1（Cartier 定理）**
+> 对光滑簇 $X/k$（特征 $p$），$p$-形式有分解：
+> $$d\omega = 0 \iff \omega = d' v + d'' w$$
+> 其中 $C^{-1}: \Omega^1_{X/k} \to \Omega^1_{X/k}$ 是 Cartier 算子。
+
+### 127.5.2 应用
+
+**例子 127.5.2（闭 $p$-形式）**
+> Cartier 算子给出闭 $p$-形式的分类。
+
+---
+
+## 127.6 习题
+
+1. 证明 $\mathbb{F}_p$ 是 Perfect 域。
+2. 描述椭圆曲线的 $p$-可除群。
+3. 计算 $\mathbb{G}_a$ 的 de Rham 上同调。
+
+---
+
+## 127.7 参考文献
+
+1. **Hartshorne, R.** *Algebraic Geometry*. Springer, 1977.
+2. **Katz, N.** *Algebraic Solutions of Differential Equations*. Inventiones, 1973.
+3. **Serre, J.-P.** *Local Fields**. Springer, 1979.

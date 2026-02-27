@@ -1,0 +1,132 @@
+---
+title: 第125章 复流形理论：Hodge分解
+description: 深入理解Hodge理论
+section: 1
+---
+
+# 第一百二十五章：复流形理论——Hodge分解
+
+> **本章导读**：Hodge理论是连接复几何与代数几何的重要桥梁，它给出了复流形上同调群的精细结构。本章将系统介绍Hodge理论。
+
+---
+
+## 125.1 Kähler 流形
+
+### 125.1.1 Kähler 度量
+
+**定义 125.1.1（Kähler 流形）**
+> 复流形 $M$ 称为 **Kähler 流形**，如果它带有一个 Hermitian 度量 $h$，其基本形式 $\omega = -\text{Im}(h)$ 满足 $d\omega = 0$。
+
+**例子 125.1.2（Kähler 流形的例子）**
+> 1. **复欧几里得空间** $\mathbb{C}^n$ 带有标准 Kähler 度量
+> 2. **复射影空间** $\mathbb{CP}^n$ 带有 Fubini-Study 度量
+> 3. **K3 曲面** 是紧致 Kähler 流形且 $h^{2,0} = 1$
+
+### 125.1.2 Kähler 条件
+
+**命题 125.1.3**
+> 对于 Hermitian 流形，以下条件等价：
+> 1. $d\omega = 0$（Kähler 条件）
+> 2. $\partial \bar{\partial}$-lemma 成立
+> 3. 所有上同调类可以用 $(p,q)$-形式代表
+
+---
+
+## 125.2 Hodge 分解
+
+### 125.2.1Dolbeault 上同调
+
+**定义 125.2.1（Dolbeault 上同调）**
+> 设 $M$ 是复流形，$(p,q)$-形式层记为 $\Omega^{p,q}$。**Dolbeault 上同调**是：
+> $$H^{p,q}(M) = H^q(M, \Omega^p)$$
+
+**定理 125.2.2（Dolbeault 定理）**
+> 对任意复流形 $M$：
+> $$H^{p,q}_{\bar{\partial}}(M) \cong H^q(M, \Omega^p)$$
+
+### 125.2.2 Hodge 分解定理
+
+**定理 125.2.3（Hodge 分解）**
+> 设 $M$ 是紧致 Kähler 流形。则 $H^k(M; \mathbb{C})$ 有分解：
+> $$H^k(M; \mathbb{C}) = \bigoplus_{p+q=k} H^{p,q}(M)$$
+> 满足 $\overline{H^{p,q}} = H^{q,p}$。
+
+**证明思路**：
+> 使用椭圆算子的正则性。定义 $\bar{\partial}$ 伴随 $\bar{\partial}^\ast$，考虑 Laplacian $\Delta_{\bar{\partial}} = \bar{\partial}\bar{\partial}^\ast + \bar{\partial}^\ast\bar{\partial}$。椭圆算子的理论给出 Hodge 分解：
+> $$H^k(M; \mathbb{C}) \cong \mathcal{H}^{p,q}_{\Delta_{\bar{\partial}}}$$
+> 其中 $\mathcal{H}^{p,q}$ 是 $(p,q)$-型调和形式的空间。$\square$
+
+---
+
+## 125.3 Hodge 结构
+
+### 125.3.1 Hodge 结构定义
+
+**定义 125.3.1（Hodge 结构）**
+> 长度为 $n$ 的 **Hodge 结构** 包括：
+> - 整数模 $V_\mathbb{Z}$
+> - 分次 $V_\mathbb{C} = \bigoplus_{p+q=n} V^{p,q}$
+> - 满足 $\overline{V^{p,q}} = V^{q,p}$
+
+**例子 125.3.2**
+> - 流形的上同调带有权重为 $k$ 的 Hodge 结构
+> - 阿贝尔簇的上同调有极化 Hodge 结构
+
+### 125.3.2 极化 Hodge 结构
+
+**定义 125.3.3（极化）**
+> $k$ 阶 Hodge 结构的**极化**是一个双线性形式 $Q: V_\mathbb{Z} \times V_\mathbb{Z} \to \mathbb{Z}$，满足：
+> 1. $Q(v, w) = (-1)^k Q(w, v)$
+> 2. $Q(V^{p,q}, V^{p',q'}) = 0$ 除非 $p' = q, q' = p$
+> 3. $i^{p-q} Q(v, \bar{v}) > 0$ 对 $v \in V^{p,q}$
+
+---
+
+## 125.4 周期映射
+
+### 125.4.1 周期域
+
+**定义 125.4.1（周期域）**
+> 给定 Hodge 结构数据 $(h^{p,q})$，**周期域**是：
+> $$D = \{ \text{满足 Hodge 标记的 } H^k(M; \mathbb{C}) \}$$
+
+**例子 125.4.2**
+> - 对 $K3$ 曲面，周期域是 $2$ 维的 Siegel 上半平面
+> - 对一般类型曲面，周期域更为复杂
+
+### 125.4.2 周期映射
+
+**定理 125.4.3（Torelli 定理）**
+> 紧致 Kähler 流形由其 Hodge 结构（周期）唯一决定。
+
+---
+
+## 125.5 应用
+
+### 125.5.1 在代数几何中的应用
+
+**例子：曲线的 Jacobian**
+> 亏格 $g$ 曲线的 Jacobian $J(C)$ 是维数 $g$ 的阿贝尔簇，其 Hodge 结构为：
+> $$H^1(J(C); \mathbb{C}) = H^{1,0} \oplus H^{0,1}$$
+
+### 125.5.2 在弦论中的应用
+
+**例子：镜像对称**
+> 镜像对称预测 $K3$ 流形 $X$ 与其镜像 $X^\vee$ 的 Hodge 数交换：
+> $$h^{p,q}(X) = h^{n-p,n-q}(X^\vee)$$
+
+---
+
+## 125.6 习题
+
+1. 证明 $\mathbb{CP}^n$ 是 Kähler 流形。
+2. 描述 $K3$ 曲面的 Hodge 结构。
+3. 计算 $\mathbb{CP}^1 \times \mathbb{CP}^1$ 的 Hodge 数。
+
+---
+
+## 125.7 参考文献
+
+1. **Griffiths, P., Harris, J.** *Principles of Algebraic Geometry*. Wiley, 1978.
+2. **Huybrechts, D.** *Complex Geometry: An Introduction*. Springer, 2005.
+3. **Voisin, C.** *Hodge Theory and Complex Algebraic Geometry I**. Cambridge University Press, 2002.
