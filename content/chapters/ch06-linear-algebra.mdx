@@ -1,0 +1,345 @@
+---
+title: 第6章 线性代数基础
+description: 向量空间、线性映射、行列式、特征值、Jordan标准形
+section: 1
+---
+
+# 第六章：线性代数基础——向量空间的核心结构
+
+> **本章导读**：线性代数是数学中最重要的基础学科之一，不仅是几何与分析的交叉点，也是现代物理、机器学习等领域的核心工具。本章将详细介绍向量空间、线性映射、行列式、特征值与特征向量、Jordan 标准形等核心内容，这些知识将为后续学习张量代数、Hodge 理论等打下基础。
+
+---
+
+## 6.1 向量空间
+
+### 6.1.1 向量空间的定义
+
+**定义 6.1.1（向量空间）**
+> 设 $F$ 是一个域，$V$ 是一个非空集合。若满足：
+> 1. $(V, +)$ 是阿贝尔群（向量加法）
+> 2. 纯量乘法 $F \times V \to V$，$(a, v) \mapsto av$
+> 3. 对任意 $a, b \in F$, $u, v \in V$：
+>    - $a(u + v) = au + av$
+>    - $(a + b)v = av + bv$
+>    - $(ab)v = a(bv)$
+>    - $1v = v$
+>
+> 则称 $V$ 是 $F$ 上的**向量空间**（vector space），记作 $V_F$。
+
+**例子 6.1.2（常见的向量空间）**
+1. $F^n = \{(a_1, \ldots, a_n) \mid a_i \in F\}$：$n$ 维列向量空间
+2. $F[x]$：$F$ 上的多项式空间（无限维）
+3. $M_{m \times n}(F)$：$m \times n$ 矩阵空间
+4. $C(X, F)$：连续函数空间
+5. $l^p$：$p$ 次可和数列空间
+
+### 6.1.2 子空间
+
+**定义 6.1.3（子空间）**
+> $W \subseteq V$ 称为 $V$ 的**子空间**（subspace），若 $W$ 本身是 $V$ 上的向量空间。
+
+**判定条件**：$W$ 非空，且对加法和纯量乘法封闭。
+
+**例子 6.1.4**
+- 在 $\mathbb{R}^3$ 中：平面、直线、过原点的曲面
+- $\{0\}$：零子空间
+- $V$ 本身：平凡子空间
+
+### 6.1.3 生成子空间
+
+**定义 6.1.5（线性组合）**
+> 向量 $v_1, \ldots, v_k$ 的**线性组合**是形如 $a_1 v_1 + \cdots + a_k v_k$ 的向量。
+
+**定义 6.1.6（生成子空间）**
+> $S \subseteq V$ 生成的子空间：
+> $$\langle S \rangle = \left\{\sum_{i=1}^k a_i v_i \mid v_i \in S, a_i \in F, k \in \mathbb{N}\right\}$$
+
+### 6.1.4 线性相关与基
+
+**定义 6.1.7（线性相关）**
+> 向量组 $v_1, \ldots, v_k$ 称为**线性相关**，若存在不全为零的标量 $a_1, \ldots, a_k$ 使得 $\sum a_i v_i = 0$。否则称为**线性无关**。
+
+**例子 6.1.8**
+- 在 $\mathbb{R}^3$ 中，$(1, 0, 0), (0, 1, 0)$ 线性无关
+- $(1, 0, 0), (0, 1, 0), (1, 1, 0)$ 线性相关（第三个 = 前两个之和）
+
+**定义 6.1.9（基与维数）**
+> 线性无关且生成整个空间的向量组称为**基**（basis）。
+> 基的基数称为**维数**，记作 $\dim_F V$。
+
+**定理 6.1.10（维数的不变性）**
+> 向量空间的所有基有相同的基数。
+
+---
+
+## 6.2 线性映射
+
+### 6.2.1 线性映射的定义
+
+**定义 6.2.1（线性映射）**
+> 映射 $T: V \to W$ 称为**线性映射**（linear map），若对任意 $u, v \in V$, $a \in F$：
+> - $T(u + v) = T(u) + T(v)$
+> - $T(av) = aT(v)$
+
+**例子 6.2.2**
+- 零映射：$T(v) = 0$
+- 恒等映射：$T(v) = v$
+- 求导算子：$D: F[x] \to F[x]$, $D(f) = f'$
+- 求值映射：$\text{ev}_a: F[x] \to F$, $f \mapsto f(a)$
+
+### 6.2.2 核与像
+
+**定义 6.2.3（核与像）**
+> - **核**（kernel）：$\ker T = \{v \in V \mid T(v) = 0\}$
+> - **像**（image）：$\operatorname{Im} T = \{T(v) \mid v \in V\}$
+
+**定理 6.2.4（秩-零化度定理）**
+> $$\dim(\ker T) + \dim(\operatorname{Im} T) = \dim V$$
+
+### 6.2.3 线性映射的矩阵表示
+
+**定义 6.2.5（矩阵表示）**
+> 取 $V$ 的基 $\{e_1, \ldots, e_n\}$ 和 $W$ 的基 $\{f_1, \ldots, f_m\}$。
+> $T(e_j) = \sum_{i=1}^m a_{ij} f_i$，矩阵 $A = (a_{ij})$ 称为 $T$ 在指定基下的**矩阵表示**。
+
+**例子 6.2.6**
+- 求导算子 $D: \mathbb{R}[x]_{\leq 2} \to \mathbb{R}[x]_{\leq 1}$ 在基 $\{1, x, x^2\}$ 和 $\{1, x\}$ 下的矩阵：
+  $$D(1) = 0, D(x) = 1, D(x^2) = 2x$$
+  $$A = \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 2 \end{pmatrix}$$
+
+---
+
+## 6.3 行列式
+
+### 6.3.1 行列式的定义
+
+**定义 6.3.1（行列式）**
+> 矩阵 $A = (a_{ij}) \in M_n(F)$ 的**行列式**定义为：
+> $$\det(A) = \sum_{\sigma \in S_n} \operatorname{sgn}(\sigma) a_{1\sigma(1)} a_{2\sigma(2)} \cdots a_{n\sigma(n)}$$
+
+**例子 6.3.2（$2 \times 2$ 行列式）**
+$$\det\begin{pmatrix} a & b \\ c & d \end{pmatrix} = ad - bc$$
+
+### 6.3.2 行列式的性质
+
+**定理 6.3.3**
+> 1. $\det(AB) = \det(A)\det(B)$
+> 2. $\det(A^T) = \det(A)$
+> 3. 交换两行行列式变号
+> 4. 某行全为 $0$ 则行列式为 $0$
+> 5. 某行乘以 $c$ 行列式乘以 $c$
+> 6. 某行加上另一行的倍数，行列式不变
+
+### 6.3.3 行列式的几何意义
+
+- **$n=1$**：有向线段的长度
+- **$n=2$**：平行四边形的（有向）面积
+- **$n=3$**：平行六面体的（有向）体积
+
+---
+
+## 6.4 特征值与特征向量
+
+### 6.4.1 定义
+
+**定义 6.4.1（特征值与特征向量）**
+> 设 $T: V \to V$ 是线性映射。$\lambda \in F$ 称为 $T$ 的**特征值**（eigenvalue），若存在非零向量 $v \in V$ 使得 $T(v) = \lambda v$。此时 $v$ 称为对应 $\lambda$ 的**特征向量**（eigenvector）。
+
+**定义 6.4.2（特征多项式）**
+> $$p_T(\lambda) = \det(\lambda I - A)$$
+> 称为 $T$ 的**特征多项式**，其中 $A$ 是 $T$ 在某基下的矩阵。
+
+**定理 6.4.3（Cayley-Hamilton）**
+> $$p_T(T) = 0$$
+> 即把特征多项式作用在 $T$ 上得到零映射。
+
+### 6.4.2 对角化
+
+**定义 6.4.4（可对角化）**
+> $T$ 称为**可对角化**（diagonalizable），若存在 $V$ 的基使得 $T$ 的矩阵为对角矩阵。
+
+**判定条件**：
+1. $V$ 有由特征向量组成的基
+2. 特征子空间维数之和等于 $\dim V$
+3. 最小多项式无重根（若 $F$ 特征为 $0$）
+
+**例子 6.4.5**
+- $A = \begin{pmatrix} 2 & 0 \\ 0 & 3 \end{pmatrix}$ 可对角化，特征值 $2, 3$
+- $A = \begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix}$ 不可对角化（只有特征值 $1$，代数重数 $2$，几何重数 $1$）
+
+---
+
+## 6.5 Jordan 标准形
+
+### 5.1 Jordan 块
+
+**定义 6.5.1（Jordan 块）**
+> $n \times n$ 的 **Jordan 块** $J_n(\lambda)$：
+> $$J_n(\lambda) = \begin{pmatrix} \lambda & 1 & & 0 \\ & \lambda & \ddots & \\ & & \ddots & 1 \\ 0 & & & \lambda \end{pmatrix}$$
+
+**性质**：
+- 只有一个特征值 $\lambda$
+- 特征多项式：$(\lambda - x)^n$
+- 最小多项式：$(x - \lambda)^n$（$n$ 为块大小）
+
+### 6.5.2 Jordan 标准形定理
+
+**定理 6.5.2（Jordan 标准形）**
+> 设 $V$ 是代数闭域（如 $\mathbb{C}$）上的有限维向量空间。则存在 $V$ 的一组基，使得线性变换 $T$ 在该基下的矩阵为 Jordan 标准形：
+> $$J = \begin{pmatrix} J_{n_1}(\lambda_1) & & 0 \\ & \ddots & \\ 0 & & J_{n_k}(\lambda_k) \end{pmatrix}$$
+
+**例子 6.5.3**
+矩阵：
+$$A = \begin{pmatrix} 1 & 1 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 2 \end{pmatrix}$$
+的 Jordan 标准形：
+$$J = \begin{pmatrix} J_2(1) & 0 \\ 0 & J_1(2) \end{pmatrix} = \begin{pmatrix} 1 & 1 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 2 \end{pmatrix}$$
+
+---
+
+## 6.6 内积空间
+
+### 6.6.1 内积的定义
+
+**定义 6.6.1（内积）**
+> 向量空间 $V$ 上的**内积**（inner product）是满足以下条件的映射 $\langle \cdot, \cdot \rangle: V \times V \to F$：
+> 1. **正性**：$\langle v, v \rangle \geq 0$，且 $\langle v, v \rangle = 0 \Leftrightarrow v = 0$
+> 2. **线性**：$\langle av + bw, u \rangle = a\langle v, u \rangle + b\langle w, u \rangle$
+> 3. **共轭对称**：$\langle u, v \rangle = \overline{\langle v, u \rangle}$
+
+**例子 6.6.2**
+- 标准欧氏内积：$\langle x, y \rangle = x^T y$
+- 连续函数空间：$\langle f, g \rangle = \int_0^1 f(x)g(x)dx$
+
+### 6.6.2 正交与规范正交基
+
+**定义 6.6.3（正交）**
+> $\langle u, v \rangle = 0$ 称 $u$ 与 $v$ **正交**。
+
+**定理 6.6.4（Gram-Schmidt 正交化）**
+> 任意内积空间都有正交基。
+
+**过程**：从任意基 $v_1, v_2, \ldots$ 开始：
+$$u_1 = v_1$$
+$$u_2 = v_2 - \frac{\langle v_2, u_1 \rangle}{\langle u_1, u_1 \rangle} u_1$$
+$$u_3 = v_3 - \frac{\langle v_3, u_1 \rangle}{\langle u_1, u_1 \rangle} u_1 - \frac{\langle v_3, u_2 \rangle}{\langle u_2, u_2 \rangle} u_2$$
+再规范化得到正交基。
+
+---
+
+## 6.7 谱定理
+
+### 6.7.1 自伴随算子
+
+**定义 6.7.1（自伴随）**
+> 内积空间 $V$ 上的线性算子 $T$ 称为**自伴随**（self-adjoint），若 $\langle T(u), v \rangle = \langle u, T(v) \rangle$。
+
+**例子 6.7.2**
+- 实对称矩阵是自伴随的
+- 厄米矩阵（在复数域上）是自伴随的
+
+### 6.7.2 谱定理
+
+**定理 6.7.3（谱定理）**
+> 自伴随算子 $T$ 在某个正交基下可以表示为对角矩阵，对角线上是 $T$ 的特征值（都是实数）。
+
+**例子 6.7.4**
+实对称矩阵 $A = \begin{pmatrix} 2 & 1 \\ 1 & 2 \end{pmatrix}$：
+- 特征值：$3, 1$
+- 特征向量：$(1, 1), (1, -1)$
+- 正交对角化：$Q^T A Q = \begin{pmatrix} 3 & 0 \\ 0 & 1 \end{pmatrix}$，其中 $Q = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}$
+
+---
+
+## 6.8 二次型
+
+### 6.8.1 二次型的定义
+
+**定义 6.8.1（二次型）**
+> $n$ 元**二次型**是形如 $Q(x) = x^T A x$ 的多项式，其中 $A$ 是对称矩阵。
+
+**例子 6.8.2**
+- $Q(x, y) = x^2 + 2xy + y^2 = (x + y)^2$
+- $Q(x, y, z) = x^2 + y^2 - z^2$（Lorentz 形式）
+
+### 6.8.2 惯性定理
+
+**定理 6.8.3（惯性定理 / Sylvester 定律）**
+> 任意二次型可以通过可逆线性变换化为标准形：
+> $$Q(x) = x_1^2 + \cdots + x_p^2 - x_{p+1}^2 - \cdots - x_{p+q}^2$$
+> 其中 $(p, q)$ 是唯一的不变量（正惯性指数、负惯性指数）。
+
+---
+
+## 6.9 习题
+
+### 基础题
+
+1. 证明：$\mathbb{R}[x]_{\leq n}$ 是 $n+1$ 维向量空间。
+
+2. 求矩阵 $A = \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}$ 的行列式。
+
+3. 求 $A = \begin{pmatrix} 3 & 1 \\ 1 & 3 \end{pmatrix}$ 的特征值和特征向量。
+
+4. 判断 $A = \begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix}$ 是否可对角化。
+
+5. 验证 Cayley-Hamilton 定理对 $A = \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}$ 成立。
+
+### 进阶题
+
+6. **证明** 秩-零化度定理：$\dim(\ker T) + \dim(\operatorname{Im} T) = \dim V$。
+
+7. 求矩阵的 Jordan 标准形：$A = \begin{pmatrix} 1 & 1 & 0 \\ 0 & 1 & 1 \\ 0 & 0 & 1 \end{pmatrix}$。
+
+8. 用 Gram-Schmidt 过程将基 $\{(1, 1, 0), (1, 0, 1), (0, 1, 1)\}$ 正交化。
+
+9. 证明：自伴随算子的特征值都是实数。
+
+10. 将二次型 $Q(x, y) = 2x^2 + 6xy + 5y^2$ 化为标准形。
+
+### 挑战题
+
+11. **证明** 谱定理（自伴随算子可以对角化）。
+
+12. **探索**：了解奇异值分解（SVD）及其应用。
+
+13. **编程**：实现矩阵的 Jordan 标准形计算算法。
+
+14. **探索**：了解极分解 $A = QS$（正交矩阵 × 半正定对称矩阵）。
+
+---
+
+## 6.10 本章小结
+
+### 核心概念
+
+| 概念 | 符号 | 含义 |
+|------|------|------|
+| 向量空间 | $V_F$ | 域上的模 |
+| 子空间 | $W \leq V$ | 向量空间的子集 |
+| 线性映射 | $T: V \to W$ | 保持加法和数乘 |
+| 核 | $\ker T$ | 映射为零的向量 |
+| 像 | $\operatorname{Im}T$ | 映射的值域 |
+| 行列式 | $\det A$ | 体积因子 |
+| 特征值 | $\lambda$ | $T(v) = \lambda v$ |
+| Jordan 标准形 | $J$ | 分块对角矩阵 |
+| 内积 | $\langle u, v \rangle$ | 夹角与长度 |
+| 谱定理 | - | 自伴随算子对角化 |
+
+### 重要定理
+
+1. **维数公式**：$\dim(\ker T) + \dim(\operatorname{Im} T) = \dim V$
+2. **行列式乘法**：$\det(AB) = \det(A)\det(B)$
+3. **Cayley-Hamilton**：$p_T(T) = 0$
+4. **Jordan 标准形**：代数闭域上任意矩阵可化为 Jordan 形
+5. **谱定理**：自伴随算子可正交对角化
+6. **惯性定理**：二次型标准形的不变量
+
+---
+
+## 6.11 参考文献
+
+1. **Axler, S.** *Linear Algebra Done Right*. Springer, 2015.
+2. **Friedberg, S. H., Insel, A. J., Spence, L. E.** *Linear Algebra*. Pearson, 2002.
+3. **Strang, G.** *Introduction to Linear Algebra*. Wellesley-Cambridge Press, 2016.
+4. **Hoffman, K., Kunze, R.** *Linear Algebra*. Pearson, 1971.
+5. **柯斯特利金**。《代数学引论》. 高等教育出版社, 2000.
