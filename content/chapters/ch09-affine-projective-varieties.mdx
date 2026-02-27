@@ -1,0 +1,204 @@
+---
+title: 第9章 仿射簇与射影簇
+description: 代数簇的定义、仿射簇、射影簇、Zariski拓扑
+section: 1
+---
+
+# 第九章：仿射簇与射影簇——代数几何的核心对象
+
+> **本章导读**：代数簇是代数几何的基本研究对象。从仿射空间中的代数集合到射影空间中的射影簇，本章将介绍代数几何的核心概念。我们将从仿射簇开始，然后推广到射影簇，并介绍 Zariski 拓扑的基本性质。
+
+---
+
+## 9.1 代数集与 Zariski 拓扑
+
+### 9.1.1 Zariski 拓扑
+
+**定义 9.1.1（Zariski 拓扑）**
+> 设 $k$ 是代数闭域。$\mathbb{A}^n_k = k^n$ 上的 **Zariski 拓扑** 定义如下：
+> - 闭集是代数集合：$V(S) = \{x \in \mathbb{A}^n \mid f(x) = 0, \forall f \in S\}$，其中 $S \subseteq k[x_1, \ldots, x_n]$
+
+**例子 9.1.2**
+- $\mathbb{A}^1$ 中的闭集：有限点集或整个空间
+- $\mathbb{A}^2$ 中的闭集：代数曲线（可能退化）
+
+### 9.1.2 坐标环
+
+**定义 9.1.3（坐标环）**
+> 仿射代数集合 $X = V(I)$ 的**坐标环**（coordinate ring）是：
+> $$k[X] = k[x_1, \ldots, x_n] / I(X)$$
+> 其中 $I(X) = \sqrt{I}$ 是 $X$ 的理想。
+
+**例子 9.1.4**
+- $\mathbb{A}^1$ 的坐标环：$k[x]$
+- $V(y - x^2) \subset \mathbb{A}^2$ 的坐标环：$k[x, y] / \langle y - x^2 \rangle \cong k[x]$
+
+---
+
+## 9.2 仿射簇
+
+### 9.2.1 仿射簇的定义
+
+**定义 9.2.1（仿射簇）**
+> **仿射簇**（affine variety）是 Zariski 拓扑下的不可约闭集。
+
+**例子 9.2.2**
+- $\mathbb{A}^1$ 是仿射簇
+- 仿射平面曲线 $V(y^2 - x^3)$ 是仿射簇
+- 仿射平面两条直线的并不是仿射簇（可约）
+
+### 9.2.2 仿射簇的维数
+
+**定义 9.2.3（维数）**
+> 仿射簇 $X$ 的**维数** $\dim X$ 是其坐标环 $k[X]$ 的 Krull 维数。
+
+**例子 9.2.4**
+- $\dim \mathbb{A}^n = n$
+- $\dim V(y - x^2) = 1$（曲线）
+
+**定理 9.2.5**
+> $\dim X = \dim k[X]$，等于素理想链的最大长度。
+
+---
+
+## 9.3 射影簇
+
+### 9.1.1 射影空间
+
+**定义 9.3.1（射影空间）**
+> $n$ 维**射影空间**（projective space）是：
+> $$\mathbb{P}^n_k = (k^{n+1} \setminus \{0\}) / \sim$$
+> 其中 $x \sim y \iff y = \lambda x$ 对某个 $\非零 \lambda \in k$。
+
+记 $[x_0: x_1: \cdots: x_n]$ 为齐次坐标。
+
+### 9.3.2 射影代数集
+
+**定义 9.3.2（齐次理想）**
+> $k[x_0, \ldots, x_n]$ 中的**齐次理想**是满足 $I = \bigoplus_d I_d$ 的理想，其中 $I_d$ 是 $d$ 次齐次多项式的集合。
+
+**定义 9.3.3（射影代数集）**
+> $$V_+(I) = \{[x] \in \mathbb{P}^n \mid f(x) = 0, \forall f \in I_d, \forall d\}$$
+
+**例子 9.3.4**
+- $\mathbb{P}^1$ 上的二次曲线：$V_+(X^2 + Y^2 - Z^2)$
+- Veronese 曲线：$\mathbb{P}^1 \to \mathbb{P}^2$，$[s: t] \mapsto [s^2: st: t^2]$
+
+### 9.3.3 射影簇
+
+**定义 9.3.5（射影簇）**
+> **射影簇**（projective variety）是 $\mathbb{P}^n$ 中的不可约闭集。
+
+**例子 9.3.6**
+- 射影直线 $\mathbb{P}^1$
+- 射影平面曲线
+- 射影曲面
+
+---
+
+## 9.4 态射
+
+### 9.4.1 仿射态射
+
+**定义 9.4.1（态射）**
+> 仿射簇之间的**态射**（morphism）$f: X \to Y$ 是由环同态 $k[Y] \to k[X]$ 诱导的连续映射。
+
+**例子 9.4.2**
+- 嵌入映射：$\mathbb{A}^1 \to \mathbb{A}^2$，$t \mapsto (t, t^2)$
+- 投影：$\mathbb{A}^2 \to \mathbb{A}^1$，$(x, y) \mapsto x$
+
+### 9.4.2 有理映射
+
+**定义 9.4.3（有理映射）**
+> **有理映射**（rational map）是除子定义域外的局部有定义的态射。
+
+**例子 9.4.4**
+- 投影：$\mathbb{P}^2 \dashrightarrow \mathbb{P}^1$
+- 二次变换（blow-up）
+
+---
+
+## 9.5 例子：平面代数曲线
+
+### 9.5.1 直线与圆锥曲线
+
+**例子 9.5.1**
+- 直线：$V(ax + by + c)$
+- 圆锥曲线：$V(ax^2 + bxy + cy^2 + dx + ey + f)$
+
+### 9.5.2 椭圆曲线
+
+**定义 9.5.2（椭圆曲线）**
+> 光滑三次平面曲线：
+> $$y^2 = x^3 + ax + b$$
+> （需要 $\Delta = -16(4a^3 + 27b^2) \neq 0$）
+
+**重要性质**：椭圆曲线是亏格 1 的曲线，具有群结构。
+
+---
+
+## 9.6 习题
+
+### 基础题
+
+1. 验证 Zariski 拓扑确实是拓扑。
+
+2. 计算 $V(x^2 - y^3) \subset \mathbb{A}^2$ 的维数。
+
+3. 描述 $\mathbb{P}^1$ 的 Zariski 拓扑的闭集。
+
+4. 证明：仿射簇的维数等于其坐标环的 Krull 维数。
+
+5. 给出从 $\mathbb{A}^1$ 到 $\mathbb{A}^2$ 的态射例子。
+
+### 进阶题
+
+6. **证明**：射影空间 $\mathbb{P}^n$ 是不可约的。
+
+7. 描述椭圆曲线 $y^2 = x^3 - x$ 的奇点。
+
+8. 证明：平面曲线的次数（degree）与次数（degree）的关系。
+
+9. 探索：了解 Chow 群的基本思想。
+
+10. **证明**：射影簇的维数等于齐次坐标环的维数。
+
+### 挑战题
+
+11. **证明** Hilbert's Nullstellensatz：$I(V(I)) = \sqrt{I}$。
+
+12. 探索：了解消去理论（elimination theory）和结果式（resultant）。
+
+13. **编程**：实现计算代数集合的维数（对简单情况）。
+
+---
+
+## 9.7 本章小结
+
+### 核心概念
+
+| 概念 | 符号 | 含义 |
+|------|------|------|
+| Zariski 拓扑 | - | 由代数集合定义的拓扑 |
+| 仿射簇 | $V(I)$ | 仿射空间中的代数集合 |
+| 坐标环 | $k[X]$ | $k[x_1,\ldots,x_n]/I(X)$ |
+| 射影空间 | $\mathbb{P}^n$ | 齐次坐标空间 |
+| 射影簇 | $V_+(I)$ | 射影空间中的代数集合 |
+| 态射 | $f: X \to Y$ | 代数簇之间的映射 |
+| 维数 | $\dim X$ | 素理想链的最大长度 |
+
+### 重要定理
+
+1. **Hilbert's Nullstellensatz**：$I(V(I)) = \sqrt{I}$
+2. **维数定理**：$\dim X + \dim Y \geq \dim f(X) \geq \dim X + \dim Y - \dim Z$
+3. **射影簇的结构**：射影簇 = $\text{Proj}(k[x_0,\ldots,x_n]/I)$
+
+---
+
+## 9.8 参考文献
+
+1. **Hartshorne, R.** *Algebraic Geometry*. Springer, 1977.
+2. **Shafarevich, I. R.** *Basic Algebraic Geometry*. Springer, 1977.
+3. **Mumford, D.** *The Red Book of Varieties and Schemes*. Springer, 1999.
+4. **Harris, J.** *Algebraic Geometry: A First Course*. Springer, 1992.
+5. **冯克勤**。《代数几何引论》. 中国科学技术大学出版社, 2000.
