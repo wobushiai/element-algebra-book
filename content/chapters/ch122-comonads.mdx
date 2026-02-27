@@ -1,0 +1,114 @@
+---
+title: 第122章 范畴论进阶：余单体理论
+description: 深入理解余单体理论
+section: 1
+---
+
+# 第一百二十二章：范畴论进阶——余单体理论
+
+> **本章导读**：余单体（Comonad）是单子的对偶概念，在计算机科学和代数中同样有着重要的应用。本章将系统介绍余单体的理论。
+
+---
+
+## 122.1 余单体的定义与基本性质
+
+### 122.1.1 什么是一个余单体？
+
+**定义 122.1.1（余单体）**
+> 设 $\mathcal{C}$ 是一个范畴，**余单体**（Comonad）是一个三元组 $(G, \epsilon, \delta)$，其中：
+> 1. $G: \mathcal{C} \to \mathcal{C}$ 是一个函子
+> 2. $\epsilon: G \Rightarrow \text{Id}_{\mathcal{C}}$ 是余单位自然变换
+> 3. $\delta: G \Rightarrow G^2$ 是余乘法自然变换
+> 
+> 并且满足以下相容性条件：
+> - **余结合律**：$G\delta \circ \delta = \delta G \circ \delta$
+> - **余单位律**：$G\epsilon \circ \delta = \text{id}_G = \epsilon G \circ \delta$
+
+这与单子的定义完全对偶，只是方向反转。
+
+### 122.1.2 余单体的例子
+
+**例子 122.1.2（流编辑器余单体）**
+> 在计算机科学中，流编辑器（Stream Editor）可以用余单体来建模。考虑 $G(X) = \mathbb{Z} \times X$，其中 $\mathbb{Z}$ 表示当前位置，$\epsilon$ 返回当前位置的值，$\delta$ 记录当前位置的历史。
+
+**例子 122.1.3（余乘法阿贝尔群）**
+> 在阿benius群范畴中，可以构造与单子对偶的余单体结构。
+
+---
+
+## 122.2 $G$-余代数
+
+### 122.2.1 $G$-余代数的定义
+
+**定义 122.2.1（$G$-余代数）**
+> 给定余单体 $(G, \epsilon, \delta)$，一个 **$G$-余代数** $(A, a)$ 包括：
+> - 对象 $A \in \mathcal{C}$
+> - 结构映射 $a: A \to G(A)$
+> 
+> 满足：
+> 1. **余单位相容性**：$\epsilon_A \circ a = \text{id}_A$
+> 2. **余结合相容性**：$G(a) \circ a = \delta_A \circ a$
+
+### 122.2.2 余代数与态射
+
+**定义 122.2.2（余代数态射）**
+> 两个 $G$-余代数 $(A, a)$ 和 $(B, b)$ 之间的**态射** $f: A \to B$ 满足：
+> $$b \circ f = G(f) \circ a$$
+
+**命题 122.2.3**
+> $G$-余代数的范畴记为 $\text{CoAlg}(G)$，或 $\mathcal{C}^G$。
+
+---
+
+## 122.3 单子与余单体的关系
+
+### 122.3.1 伴随对诱导
+
+**定理 122.3.1**
+> 伴随对 $(L \dashv R)$ 诱导：
+> - 一个单子 $T = R \circ L$ 在 $\mathcal{C}$ 上
+> - 一个余单体 $G = L \circ R$ 在 $\mathcal{D}$ 上
+
+**证明**：
+> 给定伴随 $(L \dashv R)$，自然同构 $\text{Hom}(L(A), B) \cong \text{Hom}(A, R(B))$ 给出单位 $\eta: \text{Id} \Rightarrow RL$ 和余单位 $\epsilon: LR \Rightarrow \text{Id}$。
+> 
+> 定义 $T = RL$，乘法 $\mu = R\epsilon L: T^2 = RLR \Rightarrow RL = T$。
+> 定义 $G = LR$，余乘法 $\delta = L\eta R: LR \Rightarrow LRLR = G^2$。
+> 
+> 验证结合律和单位律 follows from 伴随的泛性质。$\square$
+
+### 122.3.2 例子
+
+**例子 122.3.2（自由-遗忘伴随）**
+> 遗忘函子 $U: \mathbf{Ab} \to \mathbf{Set}$ 与自由函子 $F: \mathbf{Set} \to \mathbf{Ab}$ 伴随。
+> - 诱导单子 $T = U \circ F$ 在 $\mathbf{Set}$ 上
+> - 诱导余单体 $G = F \circ U$ 在 $\mathbf{Ab}$ 上
+
+---
+
+## 122.4 范畴论中的应用
+
+### 122.4.1 在计算机科学中的应用
+
+**例子：状态余单体**
+> 在 Haskell 中，状态余单体用于处理上下文相关计算。它是状态单子的对偶。
+
+### 122.4.2 在代数中的应用
+
+**例子：余代数**
+> 余代数是余单体的特殊例子，其中 $G$ 就是余代数本身的函子。
+
+---
+
+## 122.5 习题
+
+1. 验证余单体的余单位与余乘法满足余单体公理。
+2. 描述集合范畴上的余单体结构。
+3. 证明 $G$-余代数范畴是余完备的。
+
+---
+
+## 122.6 参考文献
+
+1. **Mac Lane, S.** *Categories for the Working Mathematician*. Springer, 1978.
+2. **Barr, M., Wells, C.** *Category Theory for Computing Science*. Prentice Hall, 1990.

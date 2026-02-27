@@ -1,0 +1,132 @@
+---
+title: 第124章 同调代数进阶：谱序列
+description: 深入理解谱序列理论
+section: 1
+---
+
+# 第一百二十四章：同调代数进阶——谱序列
+
+> **本章导读**：谱序列是同调代数中最强大的工具之一，它在代数几何、代数拓扑等领域有着广泛的应用。本章将系统介绍谱序列的理论。
+
+---
+
+## 124.1 谱序列的基本概念
+
+### 124.1.1 什么是谱序列？
+
+**定义 124.1.1（谱序列）**
+> **谱序列**是一个二重分次模序列 $\{E^r_{p,q}\}$，带有边界映射：
+> $$d^r_{p,q}: E^r_{p,q} \to E^r_{p-r,q+r-1}$$
+> 满足 $d^r \circ d^r = 0$，并且 $E^{r+1}_{p,q} = H_{p,q}(E^r_{\ast,\ast})$。
+
+**直观理解**：
+> 谱序列可以看作一种"逐步逼近"计算同调群的方法。每一页 $E^r$ 是前一页 $E^{r-1}$ 的同调，通过这个过程最终收敛到我们想要的同调群。
+
+### 124.1.2 收敛性
+
+**定义 124.1.2（收敛）**
+> 谱序列 $\{E^r_{p,q}\}$ **收敛**到分次模 $H_\ast$ 是指：
+> $$E^r_{p,q} \Rightarrow H_{p+q}$$
+> 这意味着存在过滤 $F_p H_{p+q}$ 使得 $E^\infty_{p,q} \cong F_p H_{p+q}/F_{p-1} H_{p+q}$。
+
+---
+
+## 124.2 滤链复形与谱序列
+
+### 124.2.1 滤链复形
+
+**定义 124.2.1（滤链复形）**
+> **滤链复形**是一个带有过滤的链复形：
+> $$\cdots \supseteq F_p C_{n+1} \supseteq F_p C_n \supseteq F_p C_{n-1} \supseteq \cdots$$
+
+**定理 124.2.2（滤链复形谱序列）**
+> 每个滤链复形产生一个谱序列：
+> $$E^1_{p,q} = H_{p+q}(F_p C_\ast / F_{p-1} C_\ast) \Rightarrow H_{p+q}(C_\ast)$$
+
+**证明**：
+> 定义 $Z^r_{p,q} = \ker d \cap F_p C_{p+q}$ 和 $B^r_{p,q} = \text{im } d \cap F_p C_{p+q}$。则：
+> $$E^r_{p,q} = Z^r_{p,q} / (B^r_{p,q} + d(F_{p+r-1} C_{p+q+1}))$$
+> 
+> 验证 $d(E^r_{p,q}) \subseteq E^r_{p-r,q+r-1}$ 且 $d^2 = 0$。$\square$
+
+---
+
+## 124.3 张量积谱序列
+
+### 124.3.1 Künneth 谱序列
+
+**定理 124.3.1（Künneth 谱序列）**
+> 设 $X$ 和 $Y$ 是CW复形，$R$ 是主理想环。存在谱序列：
+> $$E^2_{p,q} = \bigoplus_{i+j=q} H_i(X;R) \otimes_R H_j(Y;R) \Rightarrow H_{p+q}(X \times Y;R)$$
+
+**例子 124.3.2**
+> 对于流形 $M^m$ 和 $N^n$：
+> $$H_k(M \times N) \cong \bigoplus_{i+j=k} H_i(M) \otimes H_j(N)$$
+
+---
+
+## 124.4 扩张谱序列
+
+### 124.4.1 LES 回顾
+
+**回顾：长正合序列**
+> 给定短正合列 $0 \to A \to B \to C \to 0$，有长正合序列：
+> $$\cdots \to H_n(A) \to H_n(B) \to H_n(C) \xrightarrow{\partial} H_{n-1}(A) \to \cdots$$
+
+### 124.4.2 通用系数定理
+
+**定理 124.4.1（域上同调的通用系数定理）**
+> 对任意空间 $X$ 和域 $k$：
+> $$H^n(X;k) \cong \text{Hom}(H_n(X), k) \oplus \text{Ext}(H_{n-1}(X), k)$$
+
+---
+
+## 124.5 谱序列的例子
+
+### 124.5.1 边缘同调谱序列
+
+**定理 124.5.1（边缘同调谱序列）**
+> 设 $X$ 是带边流形，$Y = \partial X$。存在谱序列：
+> $$E^2_{p,q} = H_p(Y; H_q(\mathbb{R}, \mathbb{R}_-)) \Rightarrow H_{p+q}(X)$$
+
+### 124.5.2 收缩谱序列
+
+**定义 124.5.2（收缩）**
+> 函子 $F$ 称为有**收缩**，如果存在自然变换 $\epsilon: F \Rightarrow \text{Id}$ 和 $\eta: \text{Id} \Rightarrow F$ 满足 $\epsilon \circ \eta = \text{id}$。
+
+**例子 124.5.3**
+> - 自由-遗忘伴随：$U \dashv F$
+> - 几何实现：$|-|: \mathbf{sSet} \to \mathbf{Top}$
+
+---
+
+## 124.6 Adams 谱序列
+
+### 124.6.1 稳定同伦群
+
+**定义 124.6.1（稳定同伦群）**
+> 空间 $X$ 的 **$n$ 阶稳定同伦群**是：
+> $$\pi^S_n(X) = \varinjlim_k \pi_{n+k}(S^k \wedge X)$$
+
+### 124.6.2 Adams 谱序列
+
+**定理 124.6.2（Adams 谱序列）**
+> 存在谱序列：
+> $$E^2_{p,q} = \text{Ext}^{p,q}_{\mathcal{A}}(H^\ast(X; \mathbb{F}_2), \mathbb{F}_2) \Rightarrow \pi^S_\ast(X)_{2}^\wedge$$
+> 其中 $\mathcal{A}$ 是 Steenrod 代数。
+
+---
+
+## 124.7 习题
+
+1. 验证滤链复形谱序列的边界映射满足 $d^2 = 0$。
+2. 计算 $S^1 \times S^1$ 的同调群。
+3. 描述 Adams 谱序列在稳定同伦论中的应用。
+
+---
+
+## 124.8 参考文献
+
+1. **McCleary, J.** *A User's Guide to Spectral Sequences*. Cambridge University Press, 2001.
+2. **Weibel, C. A.** *An Introduction to Homological Algebra*. Cambridge University Press, 1994.
+3. **Bott, R., Tu, L. W.** *Differential Forms in Algebraic Topology*. Springer, 1982.
