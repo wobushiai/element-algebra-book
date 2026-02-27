@@ -1,0 +1,84 @@
+---
+title: 第14章 复几何入门
+description: 复流形、Kähler度量、Hodge分解
+section: 1
+---
+
+# 第十四章：复几何入门——复流形与 Kähler 几何
+
+> **本章导读**：复几何是研究复流形及其上几何结构的学科。它是代数几何与微分几何的交叉领域，在数学物理中有重要应用。本章将介绍复流形、Kähler 形式和 Hodge 分解等基本概念。
+
+---
+
+## 14.1 复流形
+
+### 14.1.1 定义
+
+**定义 14.1.1（复流形）**
+> **复流形**是局部同构于 $\mathbb{C}^n$ 的 Hausdorff 空间。
+
+**例子 14.1.2**
+- $\mathbb{C}^n$
+- $\mathbb{C}\mathbb{P}^n$
+- 复 torus $\mathbb{C}^g / \Lambda$
+
+---
+
+## 14.2 Kähler 流形
+
+### 14.2.1 Kähler 形式
+
+**定义 14.2.1（Kähler 流形）**
+> 复流形 $X$ 上的 **Kähler 结构**是一个 $(1,1)$-形式 $\omega$，满足：
+> - $d\omega = 0$（闭形式）
+> - $\omega$ 是 hermitian 形式的正定部分
+
+**例子 14.2.2**
+- $\mathbb{C}^n$（标准 Kähler 形式）
+- $\mathbb{C}\mathbb{P}^n$（Fubini-Study 形式）
+
+---
+
+## 14.3 Hodge 分解
+
+### 14.3.1 Hodge 理论
+
+**定理 14.3.1（Hodge 分解）**
+> 对紧 Kähler 流形 $X$：
+> $$H^k(X, \mathbb{C}) = \bigoplus_{p+q=k} H^{p,q}(X)$$
+
+---
+
+## 14.4 习题
+
+### 基础题
+
+1. 验证 $\mathbb{C}\mathbb{P}^n$ 是复流形。
+
+2. 描述 Fubini-Study 形式。
+
+3. 证明 $H^{p,q} = \overline{H^{q,p}}$。
+
+4. 计算 $\mathbb{C}\mathbb{P}^1$ 的 Hodge 数。
+
+5. 了解复几何与代数几何的关系。
+
+---
+
+## 14.5 本章小结
+
+### 核心概念
+
+| 概念 | 符号 | 含义 |
+|------|------|------|
+| 复流形 | $X$ | 局部同构于 $\mathbb{C}^n$ |
+| Kähler 形式 | $\omega$ | 闭的 hermitian (1,1)-形式 |
+| Hodge 分解 | $H^k = \oplus H^{p,q}$ | 复几何中的上同调分解 |
+
+---
+
+## 14.6 参考文献
+
+1. **Griffiths, P., Harris, J.** *Principles of Algebraic Geometry*. Wiley, 1978.
+2. **Huybrechts, D.** *Complex Geometry: An Introduction*. Springer, 2005.
+3. **Voisin, C.** *Hodge Theory and Complex Algebraic Geometry*. Cambridge University Press, 2002.

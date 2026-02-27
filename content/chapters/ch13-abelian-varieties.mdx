@@ -1,0 +1,110 @@
+---
+title: 第13章 Abel 簇入门
+description: Abel 簇的定义、椭圆曲线推广、阿贝尔簇的基本性质
+section: 1
+---
+
+# 第十三章：Abel 簇——高维阿贝尔簇入门
+
+> **本章导读**：Abel 簇是代数几何中一类重要的光滑完备代数簇，它具有阿贝尔群结构。作为椭圆曲线的高维推广，Abel 簇在数论、密码学、模空间理论中都有重要应用。本章将介绍 Abel 簇的基本概念和性质。
+
+---
+
+## 13.1 Abel 簇的定义
+
+### 13.1.1 定义
+
+**定义 13.1.1（Abel 簇）**
+> **Abel 簇**（Abelian variety）是完备的连通代数簇 $A$，其上有正则的阿贝尔群结构（即群运算和逆元都是正则映射）。
+
+**例子 13.1.2**
+- 椭圆曲线（亏格 1 的曲线）
+- 复 torus $\mathbb{C}^g / \Lambda$
+- Jacobian 簇
+
+### 13.1.2 基本性质
+
+**定理 13.1.3**
+> Abel 簇是交换的（阿贝尔群）。
+
+**定理 13.1.4**
+> Abel 簇是射影的。
+
+---
+
+## 13.2 复 Abel 簇
+
+### 13.2.1 复 torus
+
+**定义 13.2.1（复 torus）**
+> 设 $\Lambda \subset \mathbb{C}^g$ 是秩为 $2g$ 的格子，则 $A = \mathbb{C}^g / \Lambda$ 是复 torus。
+
+**例子 13.2.2**
+> $g = 1$ 时，$A = \mathbb{C} / (\mathbb{Z} + \mathbb{Z}\tau)$ 是椭圆曲线。
+
+### 13.2.2 极化
+
+**定义 13.2.3（极化）**
+> Abel 簇 $A$ 上的**极化**（polarization）是一个 ample 除子类 $\lambda$。
+
+---
+
+## 13.3 Jacobian 簇
+
+### 13.3.1 定义
+
+**定义 13.3.1（Jacobian）**
+> 曲线 $C$ 的 **Jacobian 簇** $\text{Jac}(C)$ 是 $C$ 的 Picard 群 $\text{Pic}^0(C)$ 的连通分支。
+
+**定理 13.3.2**
+> $\text{Jac}(C)$ 是一个 Abel 簇，亏格为 $g$ 的曲线的 Jacobian 维数为 $g$。
+
+---
+
+## 13.4 习题
+
+### 基础题
+
+1. 验证椭圆曲线是 Abel 簇。
+
+2. 描述 $\mathbb{C}^g / \Lambda$ 的群结构。
+
+3. 证明 Jacobian 簇是 Abel 簇。
+
+4. 计算亏格 2 曲线的 Jacobian 维数。
+
+5. 探索：了解 Abel 簇在密码学中的应用。
+
+### 进阶题
+
+6. **证明**：Abel 簇是交换群。
+
+7. 了解 Theta 函数的定义。
+
+8. **证明**：Abel 簇是射影的。
+
+9. 探索：了解模空间 $A_g$ 的基本性质。
+
+10. 了解 AV 的 Tate 模块。
+
+---
+
+## 13.5 本章小结
+
+### 核心概念
+
+| 概念 | 符号 | 含义 |
+|------|------|------|
+| Abel 簇 | $A$ | 完备的阿贝尔簇 |
+| 复 torus | $\mathbb{C}^g/\Lambda$ | 复数域上的 Abel 簇 |
+| 极化 | $\lambda$ | ample 除子类 |
+| Jacobian | $\text{Jac}(C)$ | 曲线的 Picard 群 |
+
+---
+
+## 13.6 参考文献
+
+1. **Mumford, D.** *Abelian Varieties*. Tata Institute, 1974.
+2. **Birkenhake, C., Lange, H.** *Complex Abelian Varieties*. Springer, 2004.
+3. **Milne, J. S.** *Abelian Varieties*. Available online.
+4. **Hartshorne, R.** *Algebraic Geometry*. Springer, 1977.
