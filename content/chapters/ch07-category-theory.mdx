@@ -1,0 +1,272 @@
+---
+title: 第7章 范畴论基础
+description: 范畴、函子、自然变换、泛性质
+section: 1
+---
+
+# 第七章：范畴论基础——数学的统一语言
+
+> **本章导读**：范畴论是现代数学的统一语言，它从更高的抽象层次描述数学结构之间的关系。在代数几何中，范畴论无处不在——从层（sheaf）的定义到概形（scheme）的构建，都离不开范畴论的思想。本章将介绍范畴、函子、自然变换和泛性质等核心概念，为后续学习打下基础。
+
+---
+
+## 7.1 范畴的定义
+
+### 7.1.1 什么是范畴？
+
+**定义 7.1.1（范畴）**
+> 一个**范畴**（category） $\mathcal{C}$ 由以下两部分组成：
+> 1. **对象**（objects）的集合，记作 $\text{Ob}(\mathcal{C})$
+> 2. **态射**（morphisms）的集合。对每个对象 $A, B \in \mathcal{C}$，有一个态射集合 $\text{Hom}_{\mathcal{C}}(A, B)$
+>
+> 满足：
+> - **单位态射**：对每个对象 $A$，存在态射 $\text{id}_A: A \to A$
+> - **态射可复合**：若 $f: A \to B$, $g: B \to C$，则存在复合态射 $g \circ f: A \to C$
+> - **结合律**：$(h \circ g) \circ f = h \circ (g \circ f)$
+> - **单位态射性质**：$f \circ \text{id}_A = f = \text{id}_B \circ f$
+
+**例子 7.1.2（常见范畴）**
+1. **Set**：对象是集合，态射是函数
+2. **Grp**：对象是群，态射是群同态
+3. **Ring**：对象是环，态射是环同态
+4. **Vect$_k$**：对象是域 $k$ 上的向量空间，态射是线性映射
+5. **Top**：对象是拓扑空间，态射是连续映射
+6. **Ab**：对象是阿贝尔群，态射是群同态
+
+### 7.1.2 范畴的例子：偏序集
+
+**例子 7.1.3**
+> 任何偏序集 $(P, \leq)$ 可以看作一个范畴：
+> - 对象：$P$ 的元素
+> - 态射：若 $a \leq b$，则唯一存在态射 $a \to b$
+
+---
+
+## 7.2 态射的特殊类型
+
+### 7.2.1 单射、满射、可逆
+
+**定义 7.2.1**
+> - **单态射**（monomorphism）：$f: A \to B$ 满足：若 $g_1, g_2: X \to A$ 且 $f \circ g_1 = f \circ g_2$，则 $g_1 = g_2$
+> - **满态射**（epimorphism）：$f: A \to B$ 满足：若 $h_1, h_2: B \to Y$ 且 $h_1 \circ f = h_2 \circ f$，则 $h_1 = h_2$
+> - **同构**（isomorphism）：存在 $g: B \to A$ 使得 $g \circ f = \text{id}_A$ 且 $f \circ g = \text{id}_B$
+
+**例子 7.2.2**
+- 在 **Set** 中，单态射 = 单射，满态射 = 满射
+- 在 **Ab** 中，单态射 = 单射，满态射 = 满射
+- 在 **Ring** 中，满态射不一定是满射（例如 $\mathbb{Z} \to \mathbb{Q}$）
+
+### 7.2.2 始对象与终对象
+
+**定义 7.2.3**
+> - **始对象**（initial object）：对象 $I$ 满足对任意对象 $X$，存在唯一态射 $I \to X$
+> - **终对象**（terminal object）：对象 $T$ 满足对任意对象 $X$，存在唯一态射 $X \to T$
+> - **零对象**（zero object）：既是始对象又是终对象
+
+**例子 7.2.4**
+- 在 **Set** 中，空集 $\emptyset$ 是始对象，任意单点集是终对象
+- 在 **Grp** 中平凡群 $\{e\}$ 是零对象
+- 在 **Top** 中，空空间是始对象，单点空间是终对象
+
+---
+
+## 7.3 函子
+
+### 7.3.1 函子的定义
+
+**定义 7.3.1（函子）**
+> 范畴 $\mathcal{C}$ 到范畴 $\mathcal{D}$ 的**函子**（functor）$F$ 包括：
+> 1. 对象映射：$F: \text{Ob}(\mathcal{C}) \to \text{Ob}(\mathcal{D})$
+> 2. 态射映射：$F: \text{Hom}_{\mathcal{C}}(A, B) \to \text{Hom}_{\mathcal{D}}(F(A), F(B))$
+>
+> 满足：
+> - $F(\text{id}_A) = \text{id}_{F(A)}$
+> - $F(g \circ f) = F(g) \circ F(f)$
+
+**例子 7.3.2**
+1. **忘却函子**（forgetful functor）：
+   - $U: \text{Grp} \to \text{Set}$：群对应其底层集合
+   - $U: \text{Top} \to \text{Set}$：拓扑空间对应其底层集合
+
+2. **自由函子**（free functor）：
+   - $F: \text{Set} \to \text{Grp}$：集合对应自由群
+
+3. **同伦函子**：
+   - $\pi_1: \text{Top}_* \to \text{Grp}$：基点化拓扑空间对应基本群
+
+### 7.3.2 协变函子与反变函子
+
+**定义 7.3.3（反变函子）**
+> **反变函子**（contravariant functor）$F: \mathcal{C} \to \mathcal{D}$ 满足：
+> - $F(f: A \to B): F(B) \to F(A)$
+> - $F(g \circ f) = F(f) \circ F(g)$
+
+**例子 7.3.4**
+- **对偶空间函子**：$V \mapsto V^*$，线性映射 $T: V \to W$ 对应其转置 $T^*: W^* \to V^*$
+- **层的上截面函子**：$\Gamma(U, \mathscr{F}) = \mathscr{F}(U)$
+
+---
+
+## 7.4 自然变换
+
+### 7.4.1 自然变换的定义
+
+**定义 7.4.1（自然变换）**
+> 设 $F, G: \mathcal{C} \to \mathcal{D}$ 是两个函子。**自然变换** $\eta: F \to G$ 是一族态射：
+> $$\eta_X: F(X) \to G(X)$$
+> 对每个对象 $X \in \mathcal{C}$，满足：对任意态射 $f: X \to Y$，有
+> $$\eta_Y \circ F(f) = G(f) \circ \eta_X$$
+
+**交换图**：
+$$
+\begin{CD}
+F(X) @>{\eta_X}>> G(X)\\
+@V{F(f)}VV @VV{G(f)}V\\
+F(Y) @>{\eta_Y}>> G(Y)
+\end{CD}
+$$
+
+**例子 7.4.2**
+1. **向量空间的自然同构**：$\eta_V: V \to V^{**}$，由 $v(f) = f(v)$ 给出
+2. **阿贝尔群的同构**：$\eta_A: A \to A \otimes \mathbb{Q}$（注意不是自然的）
+
+### 7.4.2 函子范畴
+
+**定义 7.4.3（函子范畴）**
+> 从 $\mathcal{C}$ 到 $\mathcal{D}$ 的所有函子构成的范畴，记作 $\mathcal{D}^{\mathcal{C}}$，其态射是自然变换。
+
+---
+
+## 7.5 泛性质
+
+### 7.5.1 泛对象的定义
+
+**定义 7.5.1（始泛对象）**
+> 对象 $U$ 称为**始泛对象**（initial universal object），如果存在一族态射 $\iota_X: U \to X$（对每个 $X$），使得对任意态射 $f: U \to X$ 唯一决定因子分解：
+> $$f = \iota_X \circ u$$
+> 其中 $u: U \to U$ 是唯一的。
+
+更常见的形式是**余极限**（colimit）和**极限**（limit）。
+
+### 7.5.2 例子：积与余积
+
+**定义 7.5.2（范畴中的积）**
+> 对象 $P$ 加上投影态射 $\pi_1: P \to A$, $\pi_2: P \to B$ 称为 $A$ 和 $B$ 的**积**（product），如果对任意对象 $X$ 和态射 $f_1: X \to A$, $f_2: X \to B$，存在唯一态射 $u: X \to P$ 使得 $\pi_1 \circ u = f_1$, $\pi_2 \circ u = f_2$。
+> 记作 $P = A \times B$。
+
+**例子 7.5.3**
+- 在 **Set** 中，积是笛卡尔积 $A \times B$
+- 在 **Grp** 中，积是直积 $A \times B$
+- 在 **Top** 中，积是乘积拓扑
+
+**定义 7.5.4（余积）**
+> 对象 $C$ 加上内射态射 $\iota_1: A \to C$, $\iota_2: B \to C$ 称为 $A$ 和 $B$ 的**余积**（coproduct），如果对任意 $f_1: A \to X$, $f_2: B \to X$，存在唯一 $u: C \to X$ 使得 $u \circ \iota_1 = f_1$, $u \circ \iota_2 = f_2$。
+> 记作 $C = A \sqcup B$ 或 $A \amalg B$。
+
+**例子 7.5.5**
+- 在 **积是不相交Set** 中，余并集
+- 在 **Grp** 中，余积是自由积
+- 在 **Ab** 中，余积是直和 $A \oplus B$
+
+### 7.5.3 拉回与推出
+
+**定义 7.5.6（拉回/纤维积）**
+> 给定态射 $f: X \to Z$, $g: Y \to Z$，**拉回**（pullback）是一个对象 $P$ 和态射 $p_1: P \to X$, $p_2: P \to Y$，使得 $f \circ p_1 = g \circ p_2$，且满足泛性质。
+
+**定义 7.5.7（推出/纤维余积）**
+> 给定态射 $f: Z \to X$, $g: Z \to Y$，**推出**（pushout）是对象 $P$ 和态射 $i_1: X \to P$, $i_2: Y \to P$，使得 $i_1 \circ f = i_2 \circ g$，且满足泛性质。
+
+---
+
+## 7.6 Abel 范畴
+
+### 7.6.1 Abel 范畴的定义
+
+**定义 7.6.1（Abel 范畴）**
+> 范畴 $\mathcal{A}$ 称为 **Abel 范畴**，如果：
+> 1. $\mathcal{A}$ 是加性范畴（有零对象，余积 = 直和）
+> 2. 每个有限态射序列有核与余核
+> 3. 每个单态射是余核，每个满态射是核
+
+**例子 7.6.2**
+- **Ab**：阿贝尔群范畴
+- **Mod$_R$**：环 $R$ 上的左模范畴
+- **Coh$(X)$**：代数簇 $X$ 上的凝聚层范畴
+
+### 7.6.2 Abel 范畴的基本性质
+
+**定理 7.6.3**
+> 在 Abel 范畴中，每个态射都可以唯一分解为：
+> $$f = i \circ e$$
+> 其中 $e$ 是满态射（像的标准投影），$i$ 是单态射（像的嵌入）。
+
+---
+
+## 7.7 习题
+
+### 基础题
+
+1. 验证 **Set** 确实满足范畴的定义。
+
+2. 证明：在 **Ab** 中，核是单态射的核，余核是满态射的余核。
+
+3. 描述群范畴 **Grp** 中的积和余积。
+
+4. 验证：向量空间函子 $V \mapsto V^{**}$ 是自然的同构。
+
+5. 给出从 **Grp** 到 **Set** 的忘却函子的具体定义。
+
+### 进阶题
+
+6. **证明**：Abel 范畴中的短正合列
+   $$0 \to A \to B \to C \to 0$$
+   等价于 $B \cong A \oplus C$。
+
+7. 描述 **Top** 中的拉回（纤维积）是什么？
+
+8. 证明：自然变换的复合是自然的。
+
+9. 探索：了解伴随函子（adjoint functors）的定义，并给出例子。
+
+10. **证明**：自由函子 $F: \text{Set} \to \text{Grp}$ 是遗忘函子 $U: \text{Grp} \to \text{Set}$ 的左伴随。
+
+### 挑战题
+
+11. **证明** Yoneda 引理：$\text{Hom}(\text{Hom}(A, -), F) \cong F(A)$。
+
+12. 探索：了解 Kan 扩展（Kan extensions）的思想。
+
+13. **编程**：实现范畴的构造，验证态射的复合性质。
+
+---
+
+## 7.8 本章小结
+
+### 核心概念
+
+| 概念 | 符号 | 含义 |
+|------|------|------|
+| 范畴 | $\mathcal{C}$ | 对象 + 态射 |
+| 函子 | $F: \mathcal{C} \to \mathcal{D}$ | 范畴间的映射 |
+| 自然变换 | $\eta: F \to G$ | 函子间的映射 |
+| 积 | $A \times B$ |  универсальное 性质 |
+| 余积 | $A \sqcup B$ | 余积 |
+| 拉回 | $X \times_Z Y$ | 纤维积 |
+| 推出 | $X \sqcup_Z Y$ | 纤维余积 |
+| Abel 范畴 | - | 有足够核与余核的加性范畴 |
+
+### 重要定理
+
+1. **Yoneda 引理**：$\text{Hom}(h_A, F) \cong F(A)$
+2. **Abel 范畴中的短正合列分解**：$0 \to A \to B \to C \to 0 \Leftrightarrow B \cong A \oplus C$
+3. **伴随函子定理**：左伴随保持余极限，右伴随保持极限
+
+---
+
+## 7.9 参考文献
+
+1. **Mac Lane, S.** *Categories for the Working Mathematician*. Springer, 1978.
+2. **Awodey, S.** *Category Theory*. Oxford University Press, 2010.
+3. **Rotman, J. J.** *An Introduction to Homological Algebra*. Springer, 2009.
+4. **Lang, S.** *Algebra*. Springer, 2002.
+5. **Gelfand, S. I., Manin, Y. I.** *Methods of Homological Algebra*. Springer, 2003.
