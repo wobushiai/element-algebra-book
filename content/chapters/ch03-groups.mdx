@@ -1,0 +1,365 @@
+---
+title: 第3章 群论基础
+description: 群、子群、同态、同构、正规子群、商群
+section: 1
+---
+
+# 第三章：群论基础——对称性的数学
+
+> **本章导读**：群论是研究对称性的数学分支，在数学的各个领域乃至物理、化学中都有广泛应用。本章将详细介绍群的基本概念、子群、同态同构、正规子群和商群等内容，为后续的环论、域论和代数几何打下坚实的抽象代数基础。
+
+---
+
+## 3.1 群的定义与例子
+
+### 3.1.1 群的定义
+
+**定义 3.1.1（群）**
+> 设 $G$ 是一个非空集合，$\cdot$ 是 $G$ 上的二元运算。若满足：
+> 1. **结合律**：$(a \cdot b) \cdot c = a \cdot (b \cdot c)$，对任意 $a, b, c \in G$
+> 2. **单位元**：存在 $e \in G$，使得 $e \cdot a = a \cdot e = a$，对任意 $a \in G$
+> 3. **逆元**：对每个 $a \in G$，存在 $a^{-1} \in G$，使得 $a \cdot a^{-1} = a^{-1} \cdot a = e$
+>
+> 则称 $(G, \cdot)$ 为一个**群**（group）。
+
+如果运算满足交换律，即 $a \cdot b = b \cdot a$，则称为**阿贝尔群**（Abelian group，可交换群）。
+
+**例子 3.1.2（常见的群）**
+1. $(\mathbb{Z}, +)$：整数加群，阿贝尔群，单位元 $0$，逆元为 $-a$
+2. $(\mathbb{Q}, +)$、$(\mathbb{R}, +)$、$(\mathbb{C}, +)$：有理数、实数、复数加群
+3. $(\mathbb{Z}_n, +)$：模 $n$ 剩余类加群，$n$ 阶循环群
+4. $(\mathbb{Q}^*,\cdot)$、$(\mathbb{R}^*,\cdot)$：非零有理数、实数乘法群
+5. $GL_n(\mathbb{R})$：$n \times n$ 可逆实矩阵乘法群（一般线性群）
+
+**反例 3.1.3（非群）**
+- $(\mathbb{Z}, -)$：减法不满足结合律：$(1-2)-3 \neq 1-(2-3)$
+- $(\mathbb{Z}, \times)$：乘法群？注意 $0$ 没有逆元，所以不是群
+- $(\mathbb{Z}^+, \times)$：正整数乘法，单位元是 $1$，但只有 $1$ 有逆元，不是群
+
+### 3.1.2 有限群与无限群
+
+**定义**
+- **有限群**（finite group）：群中元素个数有限，记为 $|G|$
+- **无限群**（infinite group）：元素个数无限
+
+**例子**
+- $(\mathbb{Z}_n, +)$ 是 $n$ 阶有限群
+- $(\mathbb{Z}, +)$ 是无限群
+
+### 3.1.3 群的阶
+
+**定义 3.1.4（群的阶）**
+> 群 $G$ 的**阶**（order）是 $G$ 中元素的个数，记作 $|G|$。
+
+**定义 3.1.5（元素的阶）**
+> 元素 $g \in G$ 的**阶**是使得 $g^n = e$ 的最小正整数 $n$，记作 $|g|$。若不存在这样的 $n$，则 $g$ 的阶为无穷。
+
+**例子 3.1.6**
+- 在 $(\mathbb{Z}_6, +)$ 中，$[1]$ 的阶是 $6$，$[2]$ 的阶是 $3$，$[3]$ 的阶是 $2$，$[0]$ 的阶是 $1$
+
+---
+
+## 3.2 子群
+
+### 3.2.1 子群的定义
+
+**定义 3.2.1（子群）**
+> 设 $H$ 是群 $G$ 的非空子集。若 $H$ 本身关于 $G$ 的运算构成群，则称 $H$ 为 $G$ 的**子群**（subgroup），记作 $H \leq G$。
+
+**定理 3.2.2（子群的判定条件）**
+> $H$ 是 $G$ 的子群的充要条件是：
+> 1. $H$ 非空
+> 2. 若 $a, b \in H$，则 $ab \in H$（封闭性）
+> 3. 若 $a \in H$，则 $a^{-1} \in H$（取逆封闭）
+
+**证明**：必要性显然。充分性：由条件2、3和结合律继承，$H$ 满足群的四条公理。$\square$
+
+**推论 3.2.3**
+> $H$ 是 $G$ 的子群当且仅当：若 $a, b \in H$，则 $ab^{-1} \in H$。
+
+**例子 3.2.4（子群例子）**
+- 在 $(\mathbb{Z}, +)$ 中，$n\mathbb{Z} = \{\ldots, -2n, -n, 0, n, 2n, \ldots\}$ 是子群
+- 在 $GL_n(\mathbb{R})$ 中，$SL_n(\mathbb{R}) = \{A \mid \det A = 1\}$ 是子群（特殊线性群）
+- 在 $(\mathbb{Z}_6, +)$ 中，$\{[0], [3]\}$ 是子群
+
+### 3.2.2 生成子群
+
+**定义 3.2.5（生成子群）**
+> 设 $S$ 是群 $G$ 的子集。由 $S$ 生成的**子群**是包含 $S$ 的最小子群，记作 $\langle S \rangle$。
+> $$\langle S \rangle = \{s_1^{\varepsilon_1} s_2^{\varepsilon_2} \cdots s_n^{\varepsilon_n} \mid s_i \in S, \varepsilon_i = \pm 1, n \in \mathbb{N}\}$$
+
+**例子 3.2.6**
+- 在 $(\mathbb{Z}, +)$ 中，$\langle 2, 3 \rangle = \mathbb{Z}$（因为 $1 = 3 - 2$）
+- 在 $S_3$（见下）中，$\langle (1\ 2) \rangle = \{e, (1\ 2)\}$
+
+### 3.2.3 循环群
+
+**定义 3.2.7（循环群）**
+> 若存在 $g \in G$ 使得 $G = \langle g \rangle = \{g^n \mid n \in \mathbb{Z}\}$，则称 $G$ 为**循环群**，$g$ 称为**生成元**。
+
+**定理 3.2.8（循环群的结构）**
+> 1. 若 $|g| = n$，则 $\langle g \rangle \cong \mathbb{Z}_n$（同构）
+> 2. 若 $|g| = \infty$，则 $\langle g \rangle \cong \mathbb{Z}$
+
+**例子 3.2.9**
+- $(\mathbb{Z}_n, +)$ 是 $n$ 阶循环群，生成元是 $[1]$
+- $(\mathbb{Q}, +)$ 不是循环群
+
+---
+
+## 3.3 群同态与群同构
+
+### 3.3.1 同态的定义
+
+**定义 3.3.1（群同态）**
+> 设 $G, H$ 是群。映射 $\varphi: G \to H$ 称为**同态**（homomorphism），如果：
+> $$\varphi(gh) = \varphi(g)\varphi(h), \quad \forall g, h \in G$$
+
+**定义（特殊同态）**
+- **单同态**：$\varphi$ 是单射
+- **满同态**：$\varphi$ 是满射
+- **同构**：$\varphi$ 是双射
+
+若存在群同构 $\varphi: G \to H$，则称 $G$ 与 $H$ **同构**，记作 $G \cong H$。
+
+**例子 3.3.2**
+1. **行列式映射**：$\det: GL_n(\mathbb{R}) \to \mathbb{R}^*$ 是满同态，核为 $SL_n(\mathbb{R})$
+2. **符号映射**：$\operatorname{sgn}: S_n \to \{\pm 1\}$ 是满同态
+3. **自然映射**：$\pi: \mathbb{Z} \to \mathbb{Z}_n$，$\pi(k) = [k]$ 是满同态
+
+### 3.3.2 同态的基本性质
+
+**定理 3.3.3**
+> 设 $\varphi: G \to H$ 是群同态，则：
+> 1. $\varphi(e_G) = e_H$
+> 2. $\varphi(g^{-1}) = \varphi(g)^{-1}$
+> 3. 若 $K \leq G$，则 $\varphi(K) \leq H$
+> 4. 若 $L \leq H$，则 $\varphi^{-1}(L) \leq G$
+
+**证明**：
+1. $\varphi(e_G) = \varphi(e_G e_G) = \varphi(e_G)\varphi(e_G)$，两边乘以 $\varphi(e_G)^{-1}$ 得 $\varphi(e_G) = e_H$
+2. $\varphi(g)\varphi(g^{-1}) = \varphi(g g^{-1}) = \varphi(e_G) = e_H$，故 $\varphi(g^{-1}) = \varphi(g)^{-1}$
+3. 4. 由子群判定条件易证。$\square$
+
+### 3.3.3 核与像
+
+**定义 3.3.4（核与像）**
+> - **核**（kernel）：$\ker\varphi = \{g \in G \mid \varphi(g) = e_H\}$
+> - **像**（image）：$\operatorname{Im}\varphi = \varphi(G) = \{\varphi(g) \mid g \in G\}$
+
+**定理 3.3.5（第一同构定理）**
+> 若 $\varphi: G \to H$ 是同态，则：
+> $$G / \ker\varphi \cong \operatorname{Im}\varphi$$
+
+**证明**：定义映射 $\bar{\varphi}: G/\ker\varphi \to \operatorname{Im}\varphi$，$\bar{\varphi}(g\ker\varphi) = \varphi(g)$。这是良定义的（若 $g_1\ker\varphi = g_2\ker\varphi$，则 $g_1^{-1}g_2 \in \ker\varphi$，故 $\varphi(g_1) = \varphi(g_2)$），且易验证是群同构。$\square$
+
+---
+
+## 3.4 正规子群与商群
+
+### 3.4.1 正规子群
+
+**定义 3.4.1（正规子群）**
+> 设 $N \leq G$。若对所有 $g \in G$，有 $gNg^{-1} = N$（或等价地 $gN = Ng$），则称 $N$ 为 $G$ 的**正规子群**（normal subgroup），记作 $N \trianglelefteq G$。
+
+**例子 3.4.2**
+1. $A_n \trianglelefteq S_n$（交错群是对称群的正规子群）
+2. $SL_n(\mathbb{R}) \trianglelefteq GL_n(\mathbb{R})$
+3. $n\mathbb{Z} \trianglelefteq \mathbb{Z}$
+4. 交换群的所有子群都是正规子群
+
+**反例 3.4.3（非正规子群）**
+在 $S_3 = \{e, (1\ 2), (1\ 3), (2\ 3), (1\ 2\ 3), (1\ 3\ 2)\}$ 中，$H = \{e, (1\ 2)\}$ 不是正规子群，因为 $(1\ 3)H(1\ 3)^{-1} = \{(1\ 3), (2\ 3)\} \neq H$。
+
+**定理 3.4.4**
+> $N \trianglelefteq G$ 当且仅当 $N$ 是某个同态的核。
+
+### 3.4.2 商群
+
+**定义 3.4.5（陪集）**
+> 设 $H \leq G$，$g \in G$。$gH = \{gh \mid h \in H\}$ 称为 $H$ 的**左陪集**。类似定义右陪集 $Hg$。
+
+**引理 3.4.6**
+> 左陪集划分 $G$：$G = \bigcup_{g \in G} gH$，且两陪集要么相等，要么不相交。
+
+**定义 3.4.7（商群）**
+> 若 $N \trianglelefteq G$，则陪集集合 $G/N = \{gN \mid g \in G\}$ 在运算 $(aN)(bN) = (ab)N$ 下构成群，称为**商群**（quotient group）。
+
+**例子 3.4.8**
+- $\mathbb{Z}/n\mathbb{Z} \cong \mathbb{Z}_n$
+- $GL_n(\mathbb{R}) / SL_n(\mathbb{R}) \cong \mathbb{R}^*$（行列式映射的像）
+
+### 3.4.3 同构定理
+
+**定理 3.4.9（第一同构定理）**
+> 若 $\varphi: G \to H$ 是同态，$N \trianglelefteq G$，$N \subseteq \ker\varphi$，则存在唯一同态 $\bar{\varphi}: G/N \to H$，使得 $\varphi = \bar{\varphi} \circ \pi$。
+
+**定理 3.4.10（第二同构定理）**
+> 若 $H \leq G, N \trianglelefteq G$，则 $H \cap N \trianglelefteq H$ 且 $HN/N \cong H/(H \cap N)$。
+
+**定理 3.4.11（第三同构定理）**
+> 若 $N \trianglelefteq G, M \trianglelefteq G, N \subseteq M$，则 $M/N \trianglelefteq G/N$ 且 $(G/N)/(M/N) \cong G/M$。
+
+---
+
+## 3.5 群作用
+
+### 3.5.1 群作用的定义
+
+**定义 3.5.1（群作用）**
+> 群 $G$ 在集合 $X$ 上的**作用**是一个映射：
+> $$G \times X \to X, \quad (g, x) \mapsto g \cdot x$$
+> 满足：
+> 1. $e \cdot x = x$（单位元）
+> 2. $(gh) \cdot x = g \cdot (h \cdot x)$
+
+**例子 3.5.2**
+1. **平凡作用**：$g \cdot x = x$
+2. **左乘作用**：$G$ 在自身上的左乘作用 $g \cdot h = gh$
+3. **共轭作用**：$g \cdot h = ghg^{-1}$
+4. **对称群作用**：$S_n$ 在 $\{1, 2, \ldots, n\}$ 上的作用 $\sigma \cdot i = \sigma(i)$
+5. **二面体群**：$D_n$ 在正 $n$ 边形顶点上的作用
+
+### 3.5.2 轨道与稳定子
+
+**定义 3.5.3（轨道）**
+> $x \in X$ 的**轨道**：$G \cdot x = \{g \cdot x \mid g \in G\}$
+
+**定义 3.5.4（稳定子）**
+> $x \in X$ 的**稳定子群**：$G_x = \{g \in G \mid g \cdot x = x\}$
+
+**定理 3.5.5（轨道-稳定子定理）**
+> $|G \cdot x| = [G : G_x]$，即轨道大小等于指数。
+
+### 3.5.3 Burnside 引理
+
+**定理 3.5.6（Burnside 引理 / Cauchy-Frobenius）**
+> 若有限群 $G$ 作用在有限集合 $X$ 上，则轨道数为：
+> $$\frac{1}{|G|} \sum_{g \in G} |X^g|$$
+> 其中 $X^g = \{x \in X \mid g \cdot x = x\}$ 是 $g$ 的不动点集合。
+
+**应用**：计数问题，如项链染色、多面体旋转对称性等。
+
+---
+
+## 3.6 Sylow 定理
+
+### 3.6.1 p-子群
+
+**定义 3.6.1（Sylow 子群）**
+> 设 $|G| = p^n m$，其中 $p$ 为素数，$p \nmid m$。$G$ 的 $p^n$ 阶子群称为 **Sylow $p$-子群**。
+
+记 $n_p$ 为 Sylow $p$-子群的个数。
+
+### 3.6.2 Sylow 定理
+
+**定理 3.6.2（Sylow 第一定理）**
+> Sylow $p$-子群存在。
+
+**定理 3.6.3（Sylow 第二定理）**
+> 所有 Sylow $p$-子群彼此共轭。
+
+**定理 3.6.4（Sylow 第三定理）**
+> $n_p \equiv 1 \pmod{p}$ 且 $n_p \mid m$。
+
+**例子 3.6.5**
+在 $S_3$ 中，$|S_3| = 6 = 2 \times 3$。
+- Sylow $2$-子群：$\{[1], (1\ 2)\}$，共轭类有 3 个（因为 $n_2 = 3$）
+- Sylow $3$-子群：$\{[1], (1\ 2\ 3), (1\ 3\ 2)\}$，$n_3 = 1$
+
+---
+
+## 3.7 有限阿贝尔群的结构
+
+### 3.7.1 有限生成阿贝尔群
+
+**定理 3.7.1（有限阿贝尔群基本定理）**
+> 任意有限阿贝尔群 $G$ 可以分解为循环群的直和：
+> $$G \cong \mathbb{Z}_{p_1^{e_1}} \oplus \mathbb{Z}_{p_2^{e_2}} \oplus \cdots \oplus \mathbb{Z}_{p_k^{e_k}}$$
+> 其中 $p_i$ 为素数，$e_i \geq 1$。
+
+或者等价地：
+$$G \cong \mathbb{Z}_{n_1} \oplus \mathbb{Z}_{n_2} \oplus \cdots \oplus \mathbb{Z}_{n_r}$$
+其中 $n_1 \mid n_2 \mid \cdots \mid n_r$。
+
+**例子 3.7.2**
+- $\mathbb{Z}_6 \cong \mathbb{Z}_2 \oplus \mathbb{Z}_3$
+- $\mathbb{Z}_8 \oplus \mathbb{Z}_2 \cong \mathbb{Z}_4 \oplus \mathbb{Z}_4$？不对... 实际上 $\mathbb{Z}_8 \oplus \mathbb{Z}_2 \cong \mathbb{Z}_{16}$ 的结构不同
+
+---
+
+## 3.8 习题
+
+### 基础题
+
+1. 验证 $(\mathbb{Z}_6, +)$ 是群，并找出所有子群。
+
+2. 证明：循环群是阿贝尔群。
+
+3. 设 $G = S_3$，求：
+   - $|G|$
+   - 所有子群
+   - $A_3$ 是否为正规子群？
+
+4. 验证映射 $\varphi: \mathbb{Z} \to \mathbb{Z}_n$，$\varphi(k) = [k]$ 是满同态，并求 $\ker\varphi$。
+
+5. 写出 $D_4$（正方形对称群）的所有元素，并找出 Sylow 2-子群。
+
+### 进阶题
+
+6. **证明**：若 $H, K$ 是 $G$ 的子群，则 $HK$ 是子群当且仅当 $HK = KH$。
+
+7. **证明**：$A_n \trianglelefteq S_n$，且 $S_n / A_n \cong \mathbb{Z}_2$。
+
+8. 设 $\varphi: G \to H$ 是群同态。证明：$\ker\varphi \trianglelefteq G$。
+
+9. 用 Burnside 引理计算：用 3 种颜色给正三角形的 3 个顶点染色，在旋转对称下的不同染色方案数。
+
+10. 证明：$n_p \equiv 1 \pmod{p}$（Sylow 第三定理的一部分）。
+
+### 挑战题
+
+11. **证明第一同构定理**：$G / \ker\varphi \cong \operatorname{Im}\varphi$。
+
+12. 分类所有 $20$ 阶以下的有限群。
+
+13. **探索**：了解有限单群分类定理的历史和意义。
+
+14. **编程**：实现群的 Cayley 表构造，并验证 $S_3$ 的子群结构。
+
+---
+
+## 3.9 本章小结
+
+### 核心概念
+
+| 概念 | 符号 | 含义 |
+|------|------|------|
+| 群 | $(G, \cdot)$ | 带运算的代数结构 |
+| 子群 | $H \leq G$ | 群的子集构成群 |
+| 循环群 | $\langle g \rangle$ | 由单个元素生成 |
+| 同态 | $\varphi: G \to H$ | 保持运算的映射 |
+| 同构 | $G \cong H$ | 双射同态 |
+| 正规子群 | $N \trianglelefteq G$ | 共轭不变 |
+| 商群 | $G/N$ | 陪集构成的群 |
+| 轨道 | $G \cdot x$ | 群作用下的轨迹 |
+| Sylow 子群 | $Syl_p(G)$ | 最大的 p-子群 |
+
+### 重要定理
+
+1. **子群判定**：$H \leq G \Leftrightarrow H \neq \emptyset, ab^{-1} \in H$
+2. **循环群结构**：$\langle g \rangle \cong \mathbb{Z}$ 或 $\mathbb{Z}_n$
+3. **第一同构定理**：$G/\ker\varphi \cong \operatorname{Im}\varphi$
+4. **轨道-稳定子定理**：$|G \cdot x| = [G : G_x]$
+5. **Sylow 定理**：$n_p \equiv 1 \pmod{p}$，$n_p \mid m$
+6. **有限阿贝尔群结构定理**：直和分解
+
+---
+
+## 3.10 参考文献
+
+1. **Dummit, D. S., Foote, R. M.** *Abstract Algebra*. Wiley, 2004.
+2. **Rotman, J. J.** *An Introduction to the Theory of Groups*. Springer, 1995.
+3. **Hungerford, T. W.** *Algebra*. Springer, 1974.
+4. **Artin, M.** *Algebra*. Pearson, 2011.
+5. **聂灵沼, 丁石孙**。《代数学引论》. 高等教育出版社, 2000.
