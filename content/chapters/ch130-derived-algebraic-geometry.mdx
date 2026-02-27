@@ -1,0 +1,131 @@
+---
+title: 第130章 导出代数几何：三角范畴与t-结构
+description: 深入理解导出代数几何
+section: 1
+---
+
+# 第一百三十章：导出代数几何——三角范畴与 t-结构
+
+> **本章导读**：导出代数几何是现代代数几何的前沿领域，它使用三角范畴和 t-结构来研究代数几何对象。本章将介绍这一理论的基础。
+
+---
+
+## 130.1 三角范畴
+
+### 130.1.1 三角范畴的定义
+
+**定义 130.1.1（三角范畴）**
+> **三角范畴** $\mathcal{D}$ 带有以下数据：
+> - 旋转函子 $[1]: \mathcal{D} \to \mathcal{D}$
+> - 三角：$X \to Y \to Z \to X[1]$
+> 
+> 满足：
+> 1. 同构 $X[0] \cong X$
+> 2. 每个态射可以扩充为三角
+> 3. 旋转公理：$X \to Y \to Z \to X[1]$ 当且仅当 $Y \to Z \to X[1] \to Y[1]$ 是三角
+> 4. 映射公理
+
+**例子 130.1.2**
+> - 链复形范畴 $C(\mathcal{A})$
+> - 导出范畴 $D(\mathcal{A})$
+
+### 130.1.2 典型三角
+
+**定义 130.1.3（典型三角）**
+> 给定态射 $f: X \to Y$，定义 **锥** $\text{Cone}(f)$，得到典型三角：
+> $$X \xrightarrow{f} Y \to \text{Cone}(f) \to X[1]$$
+
+---
+
+## 130.2 导出范畴
+
+### 130.2.1 同调局部化
+
+**定义 130.2.1（导出范畴）**
+> **导出范畴** $D(\mathcal{A})$ 是同伦范畴对拟同构的局部化：
+> $$D(\mathcal{A}) = K(\mathcal{A})[\text{Quasi}^{-1}]$$
+
+**例子 130.2.2**
+> - $D(\text{Mod}-R)$：模的导出范畴
+> - $D(X)$：簇 $X$ 上的凝聚层导出范畴
+
+### 130.2.2 导出函子
+
+**定理 130.2.3（导出函子存在性）**
+> 左正合函子 $F: \mathcal{A} \to \mathcal{B}$ 有右导出函子 $RF: D(\mathcal{A}) \to D(\mathcal{B})$，满足：
+> $$R^i F(X) = H^i(FX)$$
+
+---
+
+## 130.3 t-结构
+
+### 130.3.1 t-结构的定义
+
+**定义 130.3.1（t-结构）**
+> **t-结构** 是三角范畴 $\mathcal{D}$ 的子范畴对 $(\mathcal{D}^{\leq 0}, \mathcal{D}^{\geq 0})$，满足：
+> 1. $\mathcal{D}^{\leq 0}[1] = \mathcal{D}^{\leq 1}$
+> 2. $\text{Hom}(\mathcal{D}^{\leq 0}, \mathcal{D}^{\geq 1}) = 0$
+> 3. 每个对象有三角 $A \to X \to B \to A[1]$ 其中 $A \in \mathcal{D}^{\leq 0}, B \in \mathcal{D}^{\geq 1}$
+
+**例子 130.3.2**
+> - 标准 t-结构：$\mathcal{D}^{\leq 0} = \{X^i = 0 \text{ for } i > 0 \}$
+
+### 130.3.2 心脏
+
+**定义 130.3.3（心脏）**
+> **t-结构 的心脏** 是 $\mathcal{A} = \mathcal{D}^{\leq 0} \cap \mathcal{D}^{\geq 0}$，它是阿贝尔范畴。
+
+**定理 130.3.4**
+> 给定 t-结构，$D(\mathcal{A})$ 可以从 $\mathcal{A}$ 重建。
+
+---
+
+## 130.4 稳定性条件
+
+### 130.4.1 Bridgeland 稳定性
+
+**定义 130.4.1（稳定性条件）**
+> **Bridgeland 稳定性条件** 包括：
+> - 中心函子 $Z: K(\mathcal{A}) \to \mathbb{C}$
+> - 角度函数 $\phi: \text{Ob}(\mathcal{A}) \to (0,1]$
+> 
+> 满足：$Z$ 在每个非零对象上不为零
+
+### 130.4.2 稳定分解
+
+**定理 130.4.2（稳定分解）**
+> 每个对象可以分解为稳定对象的直和：
+> $$X \cong \bigoplus_i A_i$$
+> 其中每个 $A_i$ 是半稳定对象。
+
+---
+
+## 130.5 应用
+
+### 130.5.1 在代数几何中的应用
+
+**例子：曲面上的稳定性**
+> - 曲面上陈类作为稳定性条件
+> - 用于研究模空间
+
+### 130.5.2 在弦论中的应用
+
+**例子：D-膜**
+> - B-膜：陈-拉赫坦稳定
+> - A-膜：开弦边界条件
+
+---
+
+## 130.6 习题
+
+1. 验证链复形范畴是三角范畴。
+2. 描述导出范畴的标准 t-结构。
+3. 构造一个简单的稳定性条件。
+
+---
+
+## 130.7 参考文献
+
+1. **Beilinson, A., Bernstein, J., Deligne, P.** *Faisceaux Pervers*. Astérisque, 1982.
+2. **Bridgeland, T.** *Stability conditions on triangulated categories*. arXiv.
+3. **Huybrechts, D.** *Fourier-Mukai Transforms in Algebraic Geometry*. Oxford University Press, 2006.
