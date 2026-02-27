@@ -1,0 +1,561 @@
+---
+title: 第2章 数论基础
+description: 整数的整除性、同余方程、素数理论
+section: 1
+---
+
+# 第二章：数论基础——整数的结构与性质
+
+> **本章导读**：数论是研究整数性质的数学分支，被称为"数学的皇后"。本章将详细介绍整数的整除性、同余方程、素数与唯一分解定理、原根与二次剩余等基础内容。这些知识不仅是后续代数几何的重要基础，也在密码学、编码理论等领域有广泛应用。
+
+---
+
+## 2.1 整数的整除性
+
+### 2.1.1 整除的定义
+
+**定义 2.1.1（整除）**
+> 设 $a, b \in \mathbb{Z}$，$a \neq 0$。如果存在 $k \in \mathbb{Z}$ 使得 $b = ak$，则称 **$a$ 整除 $b$**，记作 $a \mid b$。否则称 $a$ 不整除 $b$，记作 $a \nmid b$。
+> $$a \mid b \Leftrightarrow \exists k \in \mathbb{Z}, b = ak$$
+
+此时，$a$ 称为 $b$ 的**因数**（或**约数**），$b$ 称为 $a$ 的**倍数**。
+
+**例子 2.1.2**
+- $3 \mid 12$（因为 $12 = 3 \times 4$）
+- $-5 \mid 20$（因为 $20 = (-5) \times (-4)$）
+- $7 \nmid 15$
+
+**定理 2.1.3（整除的基本性质）**
+> 设 $a, b, c \in \mathbb{Z}$，则：
+> 1. **自反性**：$a \mid a$
+> 2. **传递性**：若 $a \mid b$ 且 $b \mid c$，则 $a \mid c$
+> 3. **线性组合**：若 $a \mid b$ 且 $a \mid c$，则 $a \mid (mb + nc)$（其中 $m, n \in \mathbb{Z}$）
+
+**证明**：
+1. $a = a \times 1$，故 $a \mid a$
+2. $b = ak$, $c = bl$，则 $c = a(kl)$，故 $a \mid c$
+3. $b = ak$, $c = al$，则 $mb + nc = a(mk + nl)$，故 $a \mid (mb + nc)$。$\square$
+
+### 2.1.2 带余除法
+
+**定理 2.1.4（带余除法 / Euclidean 除法）**
+> 给定整数 $a, b$（$b > 0$），存在唯一的整数 $q, r$ 使得：
+> $$a = bq + r, \quad \text{其中 } 0 \leq r < b$$
+> 其中 $q$ 称为**商**，$r$ 称为**余数**。
+
+**证明（存在性）**：
+考虑集合 $S = \{a - bk \mid k \in \mathbb{Z}, a - bk \geq 0\}$。
+- $S$ 非空：取 $k$ 为小于 $a/b$ 的最大整数，则 $a - bk \geq 0$
+- $S$ 有下界 $0$，故存在最小元 $r$
+- 由构造，$r = a - bq$ 且 $0 \leq r < b$
+
+**证明（唯一性）**：若另有 $a = bq' + r'$，则 $b(q - q') = r' - r$，两边取绝对值得 $b |q - q'| = |r' - r|$。由于 $|r' - r| < b$，只能有 $q = q', r = r'$。$\square$
+
+**推论 2.1.5**
+> $b > 0$，则 $a$ 能被 $b$ 整除当且仅当余数 $r = 0$。
+
+### 2.1.3 最大公因数
+
+**定义 2.1.6（最大公因数）**
+> 设 $a, b$ 不全为零。整数 $d$ 称为 $a$ 和 $b$ 的**最大公因数**（greatest common divisor），如果：
+> 1. $d \mid a$ 且 $d \mid b$（$d$ 是公因数）
+> 2. 若 $c \mid a$ 且 $c \mid b$，则 $c \mid d$（$d$ 是最大公因数）
+
+记作 $d = \gcd(a, b)$。
+
+**例子 2.1.7**
+- $\gcd(12, 18) = 6$
+- $\gcd(7, 5) = 1$
+- $\gcd(0, 5) = 5$
+
+**定义 2.1.8（互素）**
+> 若 $\gcd(a, b) = 1$，则称 $a$ 与 $b$ **互素**（coprime / relatively prime）。
+
+**定理 2.1.9（Bezout 定理 / 裴蜀定理）**
+> 对任意整数 $a, b$，存在整数 $x, y$ 使得：
+> $$ax + by = \gcd(a, b)$$
+
+**证明**（使用 Euclidean 算法）：
+设 $d = \gcd(a, b)$。Euclidean 算法给出：
+$$
+\begin{aligned}
+a &= bq_1 + r_1, \quad 0 < r_1 < b \\
+b &= r_1 q_2 + r_2, \quad 0 < r_2 < r_1 \\
+&\vdots \\
+r_{k-2} &= r_{k-1} q_k + r_k, \quad 0 < r_k < r_{k-1} \\
+r_{k-1} &= r_k q_{k+1} + r_{k+1}, \quad r_{k+1} = 0
+\end{aligned}
+$$
+最后一个非零余数 $r_k$ 就是 $\gcd(a, b)$。
+
+从下往上回代，可将 $r_k$ 表示为 $a, b$ 的整数线性组合。$\square$
+
+**例子 2.1.10**
+求 $\gcd(12, 18)$ 的 Bezout 表示：
+$$
+\begin{aligned}
+18 &= 12 \times 1 + 6 \\
+12 &= 6 \times 2 + 0
+\end{aligned}
+$$
+故 $\gcd(12, 18) = 6 = 18 - 12 \times 1$。
+
+**定理 2.1.11**
+> $a$ 与 $b$ 互素的充要条件是：存在整数 $x, y$ 使得 $ax + by = 1$。
+
+**证明**：由 Bezout 定理直接可得。$\square$
+
+**定理 2.1.12（欧几里得引理）**
+> 若 $p$ 为素数，且 $p \mid ab$，则 $p \mid a$ 或 $p \mid b$。
+
+**证明**：若 $p \nmid a$，则 $\gcd(p, a) = 1$（因为 $p$ 是素数），故存在 $x, y$ 使得 $px + ay = 1$。两边乘以 $b$：$p(bx) + (ab)y = b$。由于 $p \mid ab$，左边能被 $p$ 整除，故 $p \mid b$。$\square$
+
+---
+
+## 2.2 素数与唯一分解定理
+
+### 2.2.1 素数的定义
+
+**定义 2.2.1（素数）**
+> 大于 1 的整数 $p$ 称为**素数**（prime），如果它只有平凡因数 $\pm 1, \pm p$。
+> 换句话说：若 $p = ab$，则 $a = \pm 1$ 或 $b = \pm 1$。
+
+大于 1 且不是素数的整数称为**合数**（composite）。
+
+**例子 2.2.2**
+- 素数：$2, 3, 5, 7, 11, 13, 17, 19, 23, 29, \ldots$
+- 合数：$4, 6, 8, 9, 10, 12, 14, 15, \ldots$
+
+**注意**：$1$ 既不是素数也不是合数。
+
+**定理 2.2.3（素数的无穷性）**
+> 素数的个数是无穷的。
+
+**证明**（欧几里得的反证法）：
+假设素数只有有限个：$p_1, p_2, \ldots, p_n$。
+考虑 $N = p_1 p_2 \cdots p_n + 1$。
+- 若 $N$ 是素数，则它不在 $p_1, \ldots, p_n$ 中，矛盾。
+- 若 $N$ 是合数，则它必有一个素因数 $p$。但 $p$ 整除 $N$ 且整除 $p_1 \cdots p_n$，故 $p$ 整除 $N - p_1 \cdots p_n = 1$，矛盾。
+
+因此素数无穷多。$\square$
+
+### 2.2.2 唯一分解定理（算术基本定理）
+
+**定理 2.2.4（算术基本定理 / 唯一分解定理）**
+> 每个大于 1 的整数都可以唯一地（忽略顺序）分解为若干素数的乘积。
+> $$n = p_1^{e_1} p_2^{e_2} \cdots p_k^{e_k}, \quad p_1 < p_2 < \cdots < p_k \text{ 为素数}, e_i \geq 1$$
+
+**证明**（存在性）：使用数学归纳法。
+- 基例：$n = 2$ 是素数，分解显然。
+- 归纳假设：所有 $< n$ 的整数可以分解。
+- 归纳步骤：若 $n$ 是素数，则Done。若 $n$ 是合数，则 $n = ab$，其中 $1 < a, b < n$。由归纳假设，$a, b$ 可分解，故 $n$ 可分解。
+
+**证明**（唯一性）：设 $n$ 有两种分解：
+$$n = p_1 \cdots p_k = q_1 \cdots q_m$$
+两边都是素数。取 $p_1$，由欧几里得引理（定理2.1.12），$p_1$ 必等于某个 $q_j$。约去后继续，可得两种分解相同（忽略顺序）。$\square$
+
+**例子 2.2.5**
+- $60 = 2^2 \times 3 \times 5$
+- $100 = 2^2 \times 5^2$
+- $17 = 17$（素数）
+
+### 2.2.3 素数判定与筛法
+
+**定理 2.2.6（素数判定）**
+> 若 $n$ 是合数，则 $n$ 必有一个 $\leq \sqrt{n}$ 的素因数。
+
+**证明**：若 $n = ab$，$a, b > 1$，则 $a \leq \sqrt{n}$ 或 $b \leq \sqrt{n}$。$\square$
+
+**推论 2.2.7**
+> 要判定 $n$ 是否为素数，只需检查 $2$ 到 $\sqrt{n}$ 之间的素数是否能整除 $n$。
+
+**Eratosthenes 筛法**：
+1. 列出 $2$ 到 $N$ 的所有整数
+2. 取最小的未划去的数 $p$（必为素数），划去 $p$ 的所有倍数
+3. 重复直到 $p^2 > N$
+4. 剩余的数都是素数
+
+---
+
+## 2.3 同余方程
+
+### 2.3.1 同余的定义与性质
+
+**定义 2.3.1（同余）**
+> 给定正整数 $m$，若 $m \mid (a - b)$，则称 **$a$ 与 $b$ 模 $m$ 同余**，记作：
+> $$a \equiv b \pmod{m}$$
+> 也可写作 $a \equiv b \ (m)$。
+
+**例子 2.3.2**
+- $17 \equiv 2 \pmod{5}$（因为 $17 - 2 = 15$ 能被 $5$ 整除）
+- $100 \equiv 0 \pmod{10}$
+- $-1 \equiv 3 \pmod{4}$
+
+**定理 2.3.3（同余的性质）**
+> 同余关系是等价关系，满足：
+> 1. **自反性**：$a \equiv a \pmod{m}$
+> 2. **对称性**：若 $a \equiv b \pmod{m}$，则 $b \equiv a \pmod{m}$
+> 3. **传递性**：若 $a \equiv b, b \equiv c \pmod{m}$，则 $a \equiv c \pmod{m}$
+> 4. **加法保持**：若 $a \equiv b, c \equiv d \pmod{m}$，则 $a + c \equiv b + d \pmod{m}$
+> 5. **乘法保持**：若 $a \equiv b, c \equiv d \pmod{m}$，则 $ac \equiv bd \pmod{m}$
+> 6. **幂运算**：若 $a \equiv b \pmod{m}$，则 $a^n \equiv b^n \pmod{m}$
+
+**证明**：由 $m \mid (a - b)$ 和 $m \mid (c - d)$ 可得 $m \mid (a \pm c - (b \pm d))$ 和 $m \mid (ac - bd) = a(c-d) + d(a-b)$。$\square$
+
+### 2.3.2 剩余类与完全剩余系
+
+**定义 2.3.4（剩余类）**
+> 模 $m$ 同余的所有整数构成一个**剩余类**（residue class），记作 $[a]_m$ 或 $\bar{a}$。
+> $$\bar{a} = \{a + km \mid k \in \mathbb{Z}\}$$
+
+**例子 2.3.5**
+模 $3$ 的剩余类：
+- $\bar{0} = \{\ldots, -6, -3, 0, 3, 6, \ldots\}$
+- $\bar{1} = \{\ldots, -5, -2, 1, 4, 7, \ldots\}$
+- $\bar{2} = \{\ldots, -4, -1, 2, 5, 8, \ldots\}$
+
+**定义 2.3.6（完全剩余系）**
+> 从每个剩余类中取一个代表，这些整数构成模 $m$ 的**完全剩余系**。
+> 最常用：$\{0, 1, 2, \ldots, m-1\}$
+
+### 2.3.3 线性同余方程
+
+**定义 2.3.7（线性同余方程）**
+> 形如 $ax \equiv b \pmod{m}$ 的方程称为**线性同余方程**。
+
+**定理 2.3.8（解的存在条件）**
+> 线性同余方程 $ax \equiv b \pmod{m}$ 有解的充要条件是 $\gcd(a, m) \mid b$。
+
+**证明**：$ax \equiv b \pmod{m}$ 等价于 $ax - b = my$，即 $ax - my = b$。由 Bezout 定理，这有解当且仅当 $\gcd(a, m) \mid b$。$\square$
+
+**定理 2.3.9（解的个数）**
+> 若 $\gcd(a, m) = d$ 且 $d \mid b$，则同余方程有 $d$ 个解模 $m$。
+
+**证明**：设 $a = da', m = dm', b = db'$，其中 $\gcd(a', m') = 1$。
+方程化为 $a'x \equiv b' \pmod{m'}$，由于 $a'$ 与 $m'$ 互素，存在唯一解 $x_0$ 模 $m'$。
+原模 $m$ 的解为：$x_0, x_0 + m', x_0 + 2m', \ldots, x_0 + (d-1)m'$，共 $d$ 个。$\square$
+
+**例子 2.3.10**
+解 $6x \equiv 9 \pmod{15}$：
+- $\gcd(6, 15) = 3$，且 $3 \mid 9$，故有 $3$ 个解
+- 方程化简为 $2x \equiv 3 \pmod{5}$（除以 3）
+- $2x \equiv 3 \equiv 8 \pmod{5}$，得 $x \equiv 4 \pmod{5}$
+- 模 $15$ 的解：$x \equiv 4, 9, 14 \pmod{15}$
+
+### 2.3.4 中国剩余定理
+
+**定理 2.3.11（中国剩余定理 / CRT）**
+> 设 $m_1, m_2, \ldots, m_k$ 两两互素，则同余方程组：
+> $$x \equiv a_1 \pmod{m_1}$$
+> $$x \equiv a_2 \pmod{m_2}$$
+> $$\vdots$$
+> $$x \equiv a_k \pmod{m_k}$$
+> 有唯一解模 $M = m_1 m_2 \cdots m_k$。
+
+**证明（构造性证明）**：
+令 $M_i = M / m_i$。由于 $\gcd(M_i, m_i) = 1$，存在 $N_i$ 使得 $M_i N_i \equiv 1 \pmod{m_i}$。
+构造解：
+$$x = \sum_{i=1}^k a_i M_i N_i \pmod{M}$$
+对每个 $j$，当 $i \neq j$ 时 $M_i \equiv 0 \pmod{m_j}$，而 $a_j M_j N_j \equiv a_j \pmod{m_j}$，故满足所有同余式。$\square$
+
+**例子 2.3.12**
+解同余方程组：
+$$
+\begin{cases}
+x \equiv 2 \pmod{3} \\
+x \equiv 3 \pmod{5} \\
+x \equiv 2 \pmod{7}
+\end{cases}
+$$
+
+解法：
+- $M = 3 \times 5 \times 7 = 105$
+- $M_1 = 35$, 找 $N_1$ 使得 $35N_1 \equiv 1 \pmod{3}$，即 $2N_1 \equiv 1 \pmod{3}$，$N_1 \equiv 2$
+- $M_2 = 21$, $21N_2 \equiv 1 \pmod{5}$，即 $N_2 \equiv 1$
+- $M_3 = 15$, $15N_3 \equiv 1 \pmod{7}$，即 $N_3 \equiv 1$
+- $x = 2 \times 35 \times 2 + 3 \times 21 \times 1 + 2 \times 15 \times 1 = 140 + 63 + 30 = 233 \equiv 23 \pmod{105}$
+
+**反例 2.3.13（两两互素条件不可少）**
+$$
+\begin{cases}
+x \equiv 1 \pmod{2} \\
+x \equiv 1 \pmod{4}
+\end{cases}
+$$
+有解 $x \equiv 1 \pmod{4}$。
+
+但
+$$
+\begin{cases}
+x \equiv 1 \pmod{2} \\
+x \equiv 3 \pmod{4}
+\end{cases}
+$$
+无解，因为 $x$ 模 $2$ 只能是 $0$ 或 $1$，不能同时满足 $1$ 和 $3 \equiv 1 \pmod{2}$... 等等，这里其实有解！让我重新检查：
+
+实际上，当模数不互素时，方程组有解的条件是各个同余式在公共模数下兼容。让我换一个例子：
+$$
+\begin{cases}
+x \equiv 2 \pmod{4} \\
+x \equiv 1 \pmod{6}
+\end{cases}
+$$
+$4$ 和 $6$ 不互素，$\gcd(4, 6) = 2$，但 $2 \equiv 1 \pmod{2}$ 成立，所以有解 $x \equiv ?$。
+
+无解的例子：
+$$
+\begin{cases}
+x \equiv 2 \pmod{4} \\
+x \equiv 0 \pmod{6}
+\end{cases}
+$$
+此时需要 $x$ 同时是 $4$ 的倍数余 $2$ 和 $6$ 的倍数，即 $x = 4k+2 = 6l$，这要求 $2k+1 = 3l$，左边是奇数，右边是 $3$ 的倍数，不可能。$\square$
+
+---
+
+## 2.4 原根与离散对数
+
+### 2.4.1 阶的概念
+
+**定义 2.4.1（阶）**
+> 设 $\gcd(a, m) = 1$，使 $a^d \equiv 1 \pmod{m}$ 成立的最小正整数 $d$ 称为 **$a$ 模 $m$ 的阶**，记作 $\text{ord}_m(a)$。
+
+**例子 2.4.2**
+- $\text{ord}_7(2) = 3$（因为 $2^1 \equiv 2, 2^2 \equiv 4, 2^3 \equiv 1 \pmod{7}$）
+- $\text{ord}_{10}(3) = 4$（$3^4 = 81 \equiv 1 \pmod{10}$）
+
+**定理 2.4.3**
+> 若 $a^d \equiv 1 \pmod{m}$，则 $\text{ord}_m(a) \mid d$。
+
+**证明**：设 $\text{ord}_m(a) = t$，用带余除法 $d = qt + r$，$0 \leq r < t$。则 $a^d = a^{qt+r} = (a^t)^q a^r \equiv a^r \pmod{m}$。若 $r > 0$，则与 $t$ 的最小性矛盾。$\square$
+
+### 2.4.2 原根
+
+**定义 2.4.4（原根）**
+> 若 $\text{ord}_m(g) = \varphi(m)$（Euler 函数），则称 $g$ 是模 $m$ 的**原根**（primitive root）。
+> 换句话说，$g$ 的幂可以生成所有与 $m$ 互素的剩余类。
+
+**例子 2.4.5**
+- 模 $7$ 有原根 $3$：$3^1 \equiv 3, 3^2 \equiv 2, 3^3 \equiv 6, 3^4 \equiv 4, 3^5 \equiv 5, 3^6 \equiv 1 \pmod{7}$
+- 模 $8$ 没有原根（$\varphi(8) = 4$，但没有元素的阶为 $4$）
+
+**定理 2.4.6（原根的存在条件）**
+> 模 $m$ 存在原根的充要条件是：
+> $$m = 1, 2, 4, p^k, 2p^k$$
+> 其中 $p$ 为奇素数，$k \geq 1$。
+
+**证明**：这是数论中的经典结果，略去。$\square$
+
+### 2.4.3 离散对数
+
+**定义 2.4.7（离散对数）**
+> 设 $g$ 是模 $m$ 的原根，$\gcd(a, m) = 1$。若 $g^k \equiv a \pmod{m}$，则称 $k$ 为 **$a$ 以 $g$ 为底的离散对数**，记作 $k = \log_g a \pmod{m}$。
+
+**例子 2.4.8**
+模 $7$，原根 $3$：
+- $\log_3(1) = 6$
+- $\log_3(2) = 2$
+- $\log_3(3) = 1$
+- $\log_3(4) = 4$
+- $\log_3(5) = 5$
+- $\log_3(6) = 3$
+
+**应用**：离散对数问题是公钥密码学（如 Diffie-Hellman 密钥交换、ElGamal 加密）的基础，因为已知 $g, m, g^k$ 很难求出 $k$。
+
+---
+
+## 2.5 二次剩余
+
+### 2.5.1 Legendre 符号
+
+**定义 2.5.1（平方剩余）**
+> 设 $p$ 为奇素数，$\gcd(a, p) = 1$。若同余方程 $x^2 \equiv a \pmod{p}$ 有解，则称 $a$ 是模 $p$ 的**二次剩余**（quadratic residue）；否则称为**二次非剩余**。
+
+**例子 2.5.2**
+模 $7$：
+- $1^2 \equiv 1, 2^2 \equiv 4, 3^2 \equiv 2, 4^2 \equiv 2, 5^2 \equiv 4, 6^2 \equiv 1$
+- 二次剩余：$1, 2, 4$
+- 二次非剩余：$3, 5, 6$
+
+**定义 2.5.3（Legendre 符号）**
+> 对奇素数 $p$ 和整数 $a$，定义 **Legendre 符号**：
+> $$\left(\frac{a}{p}\right) = \begin{cases} 1 & a \text{ 是二次剩余} \\ -1 & a \text{ 是二次非剩余} \\ 0 & p \mid a \end{cases}$$
+
+### 2.5.2 欧拉判别法
+
+**定理 2.5.4（欧拉判别法）**
+> 设 $p$ 为奇素数，$\gcd(a, p) = 1$，则：
+> $$\left(\frac{a}{p}\right) \equiv a^{\frac{p-1}{2}} \pmod{p}$$
+
+**证明**：由费马小定理（定理2.6.1），$a^{p-1} \equiv 1 \pmod{p}$。若 $a$ 是二次剩余，则 $a \equiv x^2$，$a^{\frac{p-1}{2}} \equiv x^{p-1} \equiv 1$。若 $a$ 是非剩余，假设 $a^{\frac{p-1}{2}} \equiv 1$，则 $a$ 将是平方（由下文的 Wilson 定理可证），矛盾。$\square$
+
+**例子 2.5.5**
+计算 $\left(\frac{3}{7}\right)$：
+$$3^{\frac{7-1}{2}} = 3^3 = 27 \equiv 6 \equiv -1 \pmod{7}$$
+故 $3$ 是模 $7$ 的二次非剩余。
+
+### 2.5.3 二次互反律
+
+**定理 2.5.6（二次互反律）**
+> 设 $p, q$ 为不同的奇素数，则：
+> $$\left(\frac{p}{q}\right) \left(\frac{q}{p}\right) = (-1)^{\frac{p-1}{2} \cdot \frac{q-1}{2}}$$
+> 即：
+> $$\left(\frac{p}{q}\right) = \left(\frac{q}{p}\right) \cdot (-1)^{\frac{p-1}{2} \cdot \frac{q-1}{2}}$$
+
+**例子 2.5.7**
+计算 $\left(\frac{7}{31}\right)$：
+- $\frac{7-1}{2} = 3$, $\frac{31-1}{2} = 15$，$3 \times 15 = 45$ 为奇数
+- 故 $\left(\frac{7}{31}\right) = -\left(\frac{31}{7}\right) = -\left(\frac{3}{7}\right)$
+- 计算 $\left(\frac{3}{7}\right) = 3^{\frac{7-1}{2}} = 3^3 \equiv -1 \pmod{7}$，故 $\left(\frac{3}{7}\right) = -1$
+- 因此 $\left(\frac{7}{31}\right) = -(-1) = 1$，即 $7$ 是模 $31$ 的二次剩余
+
+**应用**：二次互反律可以高效计算 Legendre 符号，是数论算法的重要工具。
+
+---
+
+## 2.6 费马小定理与欧拉定理
+
+### 2.6.1 费马小定理
+
+**定理 2.6.1（费马小定理）**
+> 设 $p$ 为素数，$\gcd(a, p) = 1$，则：
+> $$a^{p-1} \equiv 1 \pmod{p}$$
+
+**证明**（组合证明）：
+考虑集合 $\{a, 2a, 3a, \ldots, (p-1)a\}$ 模 $p$。
+这些数模 $p$ 互不相同（若 $ia \equiv ja \pmod{p}$，则 $(i-j)a \equiv 0 \pmod{p}$，由 $\gcd(a, p) = 1$ 得 $i \equiv j$）。
+它们恰好是 $\{1, 2, \ldots, p-1\}$ 的一个排列。
+相乘得：$a^{p-1} (p-1)! \equiv (p-1)! \pmod{p}$，约去 $(p-1)!$（与 $p$ 互素），得 $a^{p-1} \equiv 1 \pmod{p}$。$\square$
+
+**例子 2.6.2**
+$2^{10} = 1024 \equiv 1 \pmod{11}$
+
+### 2.6.2 欧拉定理
+
+**定义 2.6.3（Euler 函数）**
+> $\varphi(n)$ 表示 $1$ 到 $n$ 中与 $n$ 互素的整数个数，称为 **Euler 函数**。
+
+**例子**：
+- $\varphi(p) = p-1$（$p$ 为素数）
+- $\varphi(p^k) = p^k - p^{k-1} = p^k(1 - 1/p)$
+- $\varphi(mn) = \varphi(m)\varphi(n)$（$m, n$ 互素）
+
+**定理 2.6.4（欧拉定理）**
+> 若 $\gcd(a, n) = 1$，则：
+> $$a^{\varphi(n)} \equiv 1 \pmod{n}$$
+
+**证明**：与费马小定理证明类似，使用与 $n$ 互素的剩余类。$\square$
+
+**例子 2.6.5**
+$3^{\varphi(10)} = 3^4 = 81 \equiv 1 \pmod{10}$
+
+---
+
+## 2.7 数论在密码学中的应用示例
+
+### 2.7.1 RSA 加密算法简介
+
+RSA 是基于大整数分解困难性的公钥密码系统：
+
+1. **密钥生成**：
+   - 选取两个大素数 $p, q$，计算 $n = pq$
+   - 计算 $\varphi(n) = (p-1)(q-1)$
+   - 选取 $e$ 与 $\varphi(n)$ 互素，$1 < e < \varphi(n)$
+   - 计算 $d$ 使得 $ed \equiv 1 \pmod{\varphi(n)}$
+
+2. **加密**：$c \equiv m^e \pmod{n}$
+
+3. **解密**：$m \equiv c^d \pmod{n}$
+
+**安全性基础**：已知 $n, e$ 难以求出 $d$（需要 $\varphi(n)$，即需要知道 $p, q$），而大整数分解是困难的。
+
+### 2.7.2 例子
+
+**例子 2.7.1**（简化的 RSA）
+- 选 $p = 3, q = 11$，$n = 33$
+- $\varphi(33) = 2 \times 10 = 20$
+- 选 $e = 3$（与 $20$ 互素）
+- 求 $d$：$3d \equiv 1 \pmod{20}$，得 $d = 7$
+
+- 加密 $m = 2$：$c = 2^3 = 8 \pmod{33}$
+- 解密：$m = 8^7 \pmod{33} = 2$（验证通过）
+
+---
+
+## 2.8 习题
+
+### 基础题
+
+1. 用 Euclidean 算法求 $\gcd(12345, 6789)$。
+
+2. 写出 $360$ 的素数分解。
+
+3. 解同余方程 $7x \equiv 3 \pmod{31}$。
+
+4. 解同余方程组：
+   $$
+   \begin{cases}
+   x \equiv 1 \pmod{3} \\
+   x \equiv 2 \pmod{5} \\
+   x \equiv 3 \pmod{7}
+   \end{cases}
+   $$
+
+5. 判断 $3$ 是不是模 $11$ 的二次剩余。
+
+### 进阶题
+
+6. **证明**：若 $a \mid bc$ 且 $\gcd(a, b) = 1$，则 $a \mid c$。
+
+7. **证明**：$\sqrt[n]{2}$ 对 $n \geq 3$ 是无理数。
+
+8. 求 $2$ 模 $13$ 的阶，并判断 $2$ 是不是 $13$ 的原根。
+
+9. 用二次互反律计算 $\left(\frac{23}{47}\right)$。
+
+10. 证明：若 $p$ 为奇素数，则 $\left(\frac{-1}{p}\right) = (-1)^{\frac{p-1}{2}}$。
+
+### 挑战题
+
+11. **证明 Wilson 定理**：$(p-1)! \equiv -1 \pmod{p}$ 当且仅当 $p$ 为素数。
+
+12. **探索**：证明每个大于 $1$ 的整数都可以唯一分解为若干素数的乘积（算术基本定理）。
+
+13. **编程挑战**：实现 Miller-Rabin 素性判定算法，并能找出 $10^6$ 以内的所有素数。
+
+14. **拓展**：查找资料，了解椭圆曲线密码学（ECC）的基本原理，并与 RSA 进行对比。
+
+---
+
+## 2.9 本章小结
+
+### 核心概念
+
+| 概念 | 符号 | 含义 |
+|------|------|------|
+| 整除 | $a \mid b$ | $b = ak$ |
+| 最大公因数 | $\gcd(a, b)$ | 最大的公因数 |
+| 互素 | $\gcd(a, b) = 1$ | 没有公共因数 |
+| 同余 | $a \equiv b \pmod{m}$ | $m \mid (a-b)$ |
+| 剩余类 | $\bar{a}$ | 同余等价类 |
+| 原根 | $g$ | 阶为 $\varphi(m)$ |
+| 二次剩余 | $\left(\frac{a}{p}\right)$ | 是否为平方 |
+
+### 重要定理
+
+1. **Bezout 定理**：$\gcd(a, b) = ax + by$
+2. **欧几里得引理**：$p \mid ab \Rightarrow p \mid a$ 或 $p \mid b$
+3. **唯一分解定理**：$n = p_1^{e_1} \cdots p_k^{e_k}$
+4. **中国剩余定理**：同余方程组有解条件
+5. **费马小定理**：$a^{p-1} \equiv 1 \pmod{p}$
+6. **欧拉定理**：$a^{\varphi(n)} \equiv 1 \pmod{n}$
+7. **二次互反律**：$\left(\frac{p}{q}\right) \left(\frac{q}{p}\right) = (-1)^{\frac{p-1}{2} \cdot \frac{q-1}{2}}$
+
+---
+
+## 2.10 参考文献
+
+1. **Hardy, G. H., Wright, E. M.** *An Introduction to the Theory of Numbers*. Oxford University Press, 2008.
+2. **Apostol, T. M.** *Introduction to Analytic Number Theory*. Springer, 1976.
+3. **Koblitz, N.** *A Course in Number Theory and Cryptography*. Springer, 1994.
+4. **华罗庚**.《数论导引》. 科学出版社, 1957.
