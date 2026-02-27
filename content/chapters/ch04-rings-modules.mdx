@@ -1,0 +1,416 @@
+---
+title: 第4章 环与模
+description: 环、理想、商环、模的基本理论
+section: 1
+---
+
+# 第四章：环与模——代数结构的核心
+
+> **本章导读**：环和模是抽象代数的核心概念，也是代数几何的基石。在代数几何中，环对应着坐标环，模则对应着 sheaf（层）的概念。本章将详细介绍环的定义、理想、商环、模的基本理论，为后续学习概形理论打下基础。
+
+---
+
+## 4.1 环的定义与例子
+
+### 4.1.1 环的定义
+
+**定义 4.1.1（环）**
+> 设 $R$ 是一个非空集合，$+, \cdot$ 是两个二元运算。若满足：
+> 1. $(R, +)$ 是阿贝尔群（单位元记为 $0$）
+> 2. $(R, \cdot)$ 是半群（满足结合律）
+> 3. **分配律**：$a(b + c) = ab + ac$，$(a + b)c = ac + bc$，对任意 $a, b, c \in R$
+>
+> 则称 $(R, +, \cdot)$ 为一个**环**（ring）。
+
+若环还满足：
+- **乘法交换律**：$ab = ba$，称为**交换环**（commutative ring）
+- **乘法单位元存在**：存在 $1 \neq 0$，使得 $1 \cdot a = a \cdot 1 = a$，称为**含单位元环**（ring with identity）
+
+**例子 4.1.2（常见的环）**
+1. $(\mathbb{Z}, +, \cdot)$：**整数环**，交换环，含单位元 $1$
+2. $(\mathbb{Z}_n, +, \cdot)$：**模 $n$ 剩余类环**，交换环
+3. $(\mathbb{Q}, +,\cdot)$、$(\mathbb{R}, +,\cdot)$、$(\mathbb{C}, +,\cdot)$：域
+4. $M_n(\mathbb{R})$：$n \times n$ 实矩阵环，非交换（当 $n > 1$）
+5. $\mathbb{Z}[i]$：**高斯整数环** $\{a + bi \mid a, b \in \mathbb{Z}\}$
+6. $\mathbb{Z}[\sqrt{2}] = \{a + b\sqrt{2} \mid a, b \in \mathbb{Z}\}$
+7. $k[x]$：域 $k$ 上的多项式环
+8. $k[x_1, x_2, \ldots, x_n]$：多元多项式环
+
+**反例 4.1.3（非环）**
+- $(\mathbb{Z}, -, 0)$：减法不满足结合律
+
+### 4.1.2 环的基本性质
+
+**定理 4.1.4**
+> 设 $R$ 是环，则对任意 $a \in R$：
+> 1. $0 \cdot a = a \cdot 0 = 0$（零因子性质）
+> 2. $(-a)b = -(ab) = a(-b)$
+> 3. $(-a)(-b) = ab$
+
+**证明**：
+1. $0 + 0 = 0$，两边乘以 $a$：$(0+0)a = 0a$，即 $0a + 0a = 0a$，故 $0a = 0$。同理 $a0 = 0$。
+2-3. 由加法逆元的定义直接可得。$\square$
+
+### 4.1.3 零因子与除环
+
+**定义 4.1.5（零因子）**
+> 若 $a \neq 0$ 且存在 $b \neq 0$ 使得 $ab = 0$，则称 $a$ 为**左零因子**。类似定义右零因子。左右零因子统称**零因子**。
+
+**例子 4.1.6**
+- 在 $\mathbb{Z}_6$ 中，$[2] \cdot [3] = [0]$，故 $[2], [3]$ 是零因子
+- 在矩阵环 $M_2(\mathbb{R})$ 中，非零矩阵可以是零因子
+
+**定义 4.1.7（整环与除环）**
+> - **整环**（integral domain）：交换环，无零因子，且 $1 \neq 0$
+> - **除环**（division ring / skew field）：每个非零元都有乘法逆元
+> - **域**（field）：交换的除环
+
+**关系**：
+$$\text{域} \subset \text{整环} \subset \text{交换环}$$
+$$\text{除环} \subset \text{环}$$
+
+**例子 4.1.8**
+- $\mathbb{Z}$ 是整环，但不是域
+- $\mathbb{Z}_p$（$p$ 为素数）是域
+- $\mathbb{Z}_6$ 是交换环，但不是整环（有零因子）
+
+---
+
+## 4.2 子环与环同态
+
+### 4.2.1 子环
+
+**定义 4.2.1（子环）**
+> 环 $R$ 的非空子集 $S$ 若对 $+, \cdot$ 封闭，且含单位元（若 $R$ 有），则称 $S$ 为 $R$ 的**子环**，记作 $S \leq R$。
+
+**例子 4.2.2**
+- $\mathbb{Z} \leq \mathbb{Q} \leq \mathbb{R} \leq \mathbb{C}$
+- $\mathbb{Z}[i] \leq \mathbb{Q}[i]$
+
+### 4.2.2 环同态
+
+**定义 4.2.3（环同态）**
+> 设 $R, S$ 是环。映射 $\varphi: R \to S$ 称为**环同态**，如果：
+> 1. $\varphi(a + b) = \varphi(a) + \varphi(b)$
+> 2. $\varphi(ab) = \varphi(a)\varphi(b)$
+> 3. 若 $R, S$ 有单位元，则 $\varphi(1_R) = 1_S$
+
+**例子 4.2.4**
+- **自然映射**：$\pi: \mathbb{Z} \to \mathbb{Z}_n$，$\pi(k) = [k]$
+- **嵌入**：$\iota: \mathbb{Z} \to \mathbb{Q}$，$\iota(n) = n$
+- **求导**：$D: k[x] \to k[x]$，$D(f) = f'$
+- **求值**：$\text{ev}_a: k[x] \to k$，$f \mapsto f(a)$
+
+---
+
+## 4.3 理想
+
+### 4.3.1 理想的定义
+
+**定义 4.3.1（理想）**
+> 设 $I$ 是环 $R$ 的非空子集。若满足：
+> 1. 对加法封闭：$a, b \in I \Rightarrow a + b \in I$
+> 2. 吸收性：$a \in I, r \in R \Rightarrow ra \in I$（左理想），或 $ar \in I$（右理想）
+>
+> 若同时满足左、右，则称 $I$ 为**理想**（ideal），记作 $I \trianglelefteq R$。
+
+**注意**：在交换环中，左理想 = 右理想 = 理想。
+
+**例子 4.3.2**
+1. **平凡理想**：$\{0\}$ 和 $R$ 本身
+2. **主理想**：在主理想环中，由单个元素生成的理想
+   - 在 $\mathbb{Z}$ 中，$\langle n \rangle = n\mathbb{Z}$
+3. **核**：任何环同态的核都是理想
+4. **多项式环**：在 $k[x]$ 中，$\langle f \rangle$ 是由 $f$ 生成的主理想
+
+**反例 4.3.3（非理想）**
+- 在 $\mathbb{Z}$ 中，$2\mathbb{Z} + 1$ 不是理想（不满足吸收性）
+
+### 4.3.2 主理想环
+
+**定义 4.3.4（主理想环）**
+> 若交换环 $R$ 中每个理想都是主理想（即由单个元素生成），则称 $R$ 为**主理想环**（Principal Ideal Ring, PIR）。
+> 若 $R$ 还是整环，则称为主理想整环（Principal Ideal Domain, PID）。
+
+**例子 4.3.5**
+- $\mathbb{Z}$ 是 PID
+- $k[x]$（$k$ 为域）是 PID
+- $\mathbb{Z}[x]$ 不是 PID（理想 $\langle 2, x \rangle$ 不是主理想）
+
+### 4.3.3 理想的运算
+
+**定理 4.3.6**
+> 设 $I, J$ 为环 $R$ 的理想，则：
+> 1. $I + J = \{a + b \mid a \in I, b \in J\}$ 是理想
+> 2. $I \cap I$ 是理想
+> 3. $IJ = \{\sum_{i=1}^n a_i b_i \mid a_i \in I, b_i \in J\}$ 是理想
+
+且 $IJ \subseteq I \cap J \subseteq I, J$。
+
+---
+
+## 4.4 商环
+
+### 4.4.1 商环的定义
+
+**定义 4.4.1（商环）**
+> 设 $I \trianglelefteq理想 R$ 是。陪集集合 $R/I = \{r + I \mid r \in R\}$ 在运算：
+> $$(a + I) + (b + I) = (a + b) + I$$
+> $$(a + I)(b + I) = ab + I$$
+> 下构成环，称为**商环**（quotient ring）。
+
+**例子 4.4.2**
+- $\mathbb{Z} / n\mathbb{Z} \cong \mathbb{Z}_n$
+- $k[x] / \langle f \rangle \cong k$（当 $f$ 为常数）
+- $k[x] / \langle x - a \rangle \cong k$（同构：$f \mapsto f(a)$）
+- $\mathbb{Z}[i] / \langle 1 + i \rangle \cong \mathbb{Z}_2$（高斯整数模 $1+i$ 的商）
+
+### 4.4.2 同构定理
+
+**定理 4.4.3（第一同构定理）**
+> 若 $\varphi: R \to S$ 是环同态，则：
+> $$R / \ker\varphi \cong \operatorname{Im}\varphi$$
+
+**定理 4.4.4（第二同构定理）**
+> 若 $I, J \trianglelefteq R$，$I \subseteq J$，则 $J/I \trianglelefteq R/I$，且：
+> $$(R/I) / (J/I) \cong R / J$$
+
+**定理 4.4.5（第三同构定理）**
+> 若 $I, J \trianglelefteq R$，则：
+> $$(I + J) / J \cong I / (I \cap J)$$
+
+---
+
+## 4.5 素理想与极大理想
+
+### 4.5.1 素理想
+
+**定义 4.5.1（素理想）**
+> 设 $P$ 是环 $R$ 的真理想。若 $ab \in P \Rightarrow a \in P$ 或 $b \in P$，则称 $P$ 为**素理想**（prime ideal）。
+
+**例子 4.5.2**
+- 在 $\mathbb{Z}$ 中，$\langle p \rangle$（$p$ 为素数）是素理想
+- 在 $\mathbb{Z}$ 中，$\{0\}$ 是素理想当且仅当 $\mathbb{Z}$ 是整环（即 $\mathbb{Z}$ 是整环，所以 $\{0\}$ 是素理想）
+- 在 $\mathbb{Z}_6$ 中，$\langle 2 \rangle = \{0, 2, 4\}$ 是素理想吗？$2 \times 3 = 0 \in \langle 2 \rangle$，但 $2, 3 \notin \langle 2 \rangle$，故不是素理想
+
+**定理 4.5.3**
+> $P$ 是素理想 $\Leftrightarrow$ $R/P$ 是整环
+
+### 4.5.2 极大理想
+
+**定义 4.5.4（极大理想）**
+> 设 $M$ 是环 $R$ 的真理想。若不存在真包含 $M$ 的理想，则称 $M$ 为**极大理想**（maximal ideal）。
+
+**例子 4.5.5**
+- 在 $\mathbb{Z}$ 中，$\langle p \rangle$（$p$ 为素数）是极大理想
+- 在 $k[x]$ 中，$\langle x - a \rangle$ 是极大理想
+- 在 $k[x, y]$ 中，$\langle x, y \rangle$ 是极大理想（对应点 $(0, 0)$）
+
+**定理 4.5.6**
+> $M$ 是极大理想 $\Leftrightarrow$ $R/M$ 是域
+
+**推论**：
+$$\text{极大理想} \Rightarrow \text{素理想}$$
+（在含单位元的交换环中）
+
+**例子 4.5.7（验证蕴含方向）**
+- $\mathbb{Z}_6$ 中，$\langle 2 \rangle$ 是素理想吗？$2 \times 3 = 0 \in \langle 2 \rangle$，但 $2, 3 \notin \langle 2 \rangle$，故不是素理想
+- $\mathbb{Z}_6$ 的极大理想：$\langle 2 \rangle, \langle 3 \rangle$（因为 $\mathbb{Z}_6 / \langle 2 \rangle \cong \mathbb{Z}_2$ 是域）
+
+---
+
+## 4.6 局部化
+
+### 4.6.1 分式域
+
+**定义 4.6.1（分式域）**
+> 设 $D$ 为整环。构造分式域 $\operatorname{Frac}(D) = \{a/b \mid a, b \in D, b \neq 0\}$，其中 $a/b = c/d \Leftrightarrow ad = bc$。
+
+**例子 4.6.2**
+- $\operatorname{Frac}(\mathbb{Z}) = \mathbb{Q}$
+- $\operatorname{Frac}(k[x]) = k(x)$（有理函数域）
+
+### 4.6.2 局部化
+
+**定义 4.6.3（局部化）**
+> 设 $S$ 是环 $R$ 的**乘法子集**（$1 \in S$，$S$ 对乘法封闭，且不含 $0$）。定义：
+> $$S^{-1}R = \{a/s \mid a \in R, s \in S\}$$
+> 其中 $a/s = b/t \Leftrightarrow \exists u \in S, u(at - bs) = 0$。
+> 称为 $R$ 在 $S$ 处的**局部化**（localization）。
+
+**例子 4.6.4**
+- $S = R \setminus \{0\}$：分式域
+- $S = \{1, f, f^2, \ldots\}$：$R_f = R[\frac{1}{f}]$（在 $f$ 处局部化）
+- $S = \{\text{不在某个素理想中的元素}\}$：素理想对应的局部环
+
+**定理 4.6.5**
+> 若 $P$ 是素理想，则 $S = R \setminus P$ 是乘法子集，且 $S^{-1}R$ 是局部环（只有唯一一个极大理想 $P S^{-1}R$）。
+
+---
+
+## 4.7 模的基本概念
+
+### 4.7.1 模的定义
+
+**定义 4.7.1（模）**
+> 设 $R$ 是环。$(M, +)$ 是阿贝尔群。若给定环作用 $R \times M \to M$，$(r, m) \mapsto rm$，满足：
+> 1. $r(m + n) = rm + rn$
+> 2. $(r + s)m = rm + sm$
+> 3. $(rs)m = r(sm)$
+> 4. $1 \cdot m = m$（若 $R$ 有单位元）
+>
+> 则称 $M$ 为左 $R$-模（left $R$-module），记作 $_R M$。
+
+**注意**：若 $R$ 是域，则 $R$-模就是向量空间。
+
+**例子 4.7.2**
+1. **阿贝尔群是 $\mathbb{Z}$-模**：$n \cdot g = g + g + \cdots + g$（$n$ 次）
+2. **向量空间**：域上的模
+3. **环 $R$ 本身是 $R$-模**：左乘作用
+4. **理想是 $R$-模**：包含运算
+5. **同态像**：若 $\varphi: M \to N$ 是 $R$-模同态，则 $\operatorname{Im}\varphi$ 是 $R$-模
+
+### 4.7.2 子模与商模
+
+**定义 4.7.3（子模）**
+> $N \subseteq M$ 是子模，若 $N$ 对加法封闭，且 $R N \subseteq N$。
+
+**定义 4.7.4（商模）**
+> 若 $N$ 是 $M$ 的子模，则商群 $M/N$ 在模作用 $r(m + N) = rm + N$ 下构成 $R$-模。
+
+### 4.7.3 模同态
+
+**定义 4.7.5（模同态）**
+> $\varphi: M \to N$ 是 $R$-模同态，若：
+> 1. $\varphi(m + n) = \varphi(m) + \varphi(n)$
+> 2. $\varphi(rm) = r\varphi(m)$
+
+**例子 4.7.6**
+- 线性代数中的线性变换
+- 群同态（$\mathbb{Z}$-模同态）
+- 环同态可以视为 $\mathbb{Z}$-模同态
+
+**同构定理**：与群、环类似。
+
+---
+
+## 4.8 自由模与投射模
+
+### 4.8.1 自由模
+
+**定义 4.8.1（自由模）**
+> 若 $M$ 同构于若干个 $R$ 的直和，则称 $M$ 为**自由模**（free module）。
+> 即存在指标集 $I$，使得 $M \cong \bigoplus_{i \in I} R$。
+
+**例子 4.8.2**
+- $R^n = R \oplus R \oplus \cdots \oplus R$（$n$ 个）是自由模
+- $R[x]$ 是无限生成自由模
+
+**定理 4.8.3**
+> 任意 $R$-模都是某个自由模的商模。
+
+### 4.8.2 投射模
+
+**定义 4.8.4（投射模）**
+> $P$ 是**投射模**（projective module），若存在模 $Q$ 使得 $P \oplus Q \cong$ 某个自由模。
+
+**例子 4.8.5**
+- 自由模是投射模
+- 域上的有限生成投射模等价于向量空间
+- 局部环上的有限生成投射模是自由的（Serre-Swan 定理的特殊情况）
+
+---
+
+## 4.9 PID 上的模
+
+### 4.9.1 主理想整环上的有限生成模结构
+
+**定理 4.9.1（PID 上有限生成模的结构定理）**
+> 设 $R$ 是 PID，$M$ 是有限生成 $R$-模，则：
+> $$M \cong R^r \oplus \bigoplus_{i=1}^k R / \langle d_i \rangle$$
+> 其中 $r \geq 0$，$d_1, \ldots, d_k \in R$ 满足 $d_1 \mid d_2 \mid \cdots \mid d_k$。
+
+**例子 4.9.2（阿贝尔群的基本定理）**
+> 任意有限生成阿贝尔群 $G$：
+> $$G \cong \mathbb{Z}^r \oplus \mathbb{Z}_{n_1} \oplus \mathbb{Z}_{n_2} \oplus \cdots \oplus \mathbb{Z}_{n_k}$$
+> 其中 $n_1 \mid n_2 \mid \cdots \mid n_k$。
+
+**例子 4.9.3**
+- $\mathbb{Z}_6 \cong \mathbb{Z}_2 \oplus \mathbb{Z}_3$
+- $\mathbb{Z}_8$ 不能分解为直和（它是循环群）
+
+---
+
+## 4.10 习题
+
+### 基础题
+
+1. 验证 $\mathbb{Z}[i]$ 是整环，并找出其中的单位（可逆元）。
+
+2. 证明：在整环中，若 $ab = ac$ 且 $a \neq 0$，则 $b = c$。
+
+3. 求 $\mathbb{Z}_12$ 的所有素理想和极大理想。
+
+4. 验证：$\mathbb{Z}[x] / \langle x \rangle \cong \mathbb{Z}$。
+
+5. 证明：域 $k$ 上的多项式环 $k[x]$ 是 PID。
+
+### 进阶题
+
+6. **证明**：若 $R$ 是整环，则 $R[x]$ 也是整环。
+
+7. 描述 $\mathbb{Z}[\sqrt{-5}]$ 的理想结构（注意它不是 PID，$\langle 2, 1+\sqrt{-5} \rangle$ 是非主理想）。
+
+8. 证明：中国剩余定理的环论版本：若 $I_1, \ldots, I_k$ 两两互素，则
+   $$R / (I_1 \cap \cdots \cap I_k) \cong R/I_1 \times \cdots \times R/I_k$$
+
+9. 证明：$R$-模 $M$ 是平坦的（flat）当且仅当保持单射。
+
+10. 分类 $\mathbb{Z}_{12}$ 上所有有限生成模。
+
+### 挑战题
+
+11. **证明 Hilbert Nullstellensatz**（弱形式）：若 $I \subseteq k[x_1, \ldots, x_n]$ 是理想，则
+    $$\sqrt{I} = \bigcap_{V(I) \neq \emptyset} \mathfrak{m}_V$$
+    其中 $\mathfrak{m}_V = \langle x_1 - a_1, \ldots, x_n - a_n \rangle$。
+
+12. **探索**：了解 Noether 环和 Artin 环的定义和基本性质。
+
+13. **编程**：实现 $\mathbb{Z}$ 上有限生成阿贝尔群的分类算法。
+
+---
+
+## 4.11 本章小结
+
+### 核心概念
+
+| 概念 | 符号 | 含义 |
+|------|------|------|
+| 环 | $(R, +, \cdot)$ | 带两种运算的代数结构 |
+| 整环 | domain | 无零因子的交换环 |
+| 域 | field | 每个非零元可逆 |
+| 理想 | $I \trianglelefteq R$ | 吸收子集 |
+| 商环 | $R/I$ | 陪集环 |
+| 素理想 | prime | $P$ 素则 $R/P$ 整 |
+| 极大理想 | maximal | $R/M$ 是域 |
+| 模 | $_R M$ | 环作用下的阿贝尔群 |
+| 自由模 | free | 同构于直和 |
+| 投射模 | projective | 某个直和的直和项 |
+
+### 重要定理
+
+1. **同构定理**：$R/\ker\varphi \cong \operatorname{Im}\varphi$
+2. **素理想 $\Leftrightarrow$ 整环**
+3. **极大理想 $\Leftrightarrow$ 域**
+4. **PID 上的模结构定理**
+5. **中国剩余定理**（环版本）
+
+---
+
+## 4.12 参考文献
+
+1. **Atiyah, M. F., MacDonald, I. G.** *Introduction to Commutative Algebra*. Addison-Wesley, 1969.
+2. **Eisenbud, D.** *Commutative Algebra with a View Toward Algebraic Geometry*. Springer, 1995.
+3. **Matsumura, H.** *Commutative Ring Theory*. Cambridge University Press, 1989.
+4. **Rotman, J.** *An Introduction to Homological Algebra*. Springer, 2009.
+5. **Bourbaki, N.** *Commutative Algebra*. Springer, 1989.
