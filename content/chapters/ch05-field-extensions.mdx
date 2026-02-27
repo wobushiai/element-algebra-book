@@ -1,0 +1,360 @@
+---
+title: 第5章 域扩张
+description: 域的基本概念、代数扩张、Galois理论基础
+section: 1
+---
+
+# 第五章：域扩张——从有理数到代数数
+
+> **本章导读**：域扩张是抽象代数和代数几何的核心概念之一。我们将从有理数域出发，逐步探索代数扩张、有限域、以及 Galois 理论的基本思想。这些内容为后续学习代数曲线和 Scheme 理论奠定基础。
+
+---
+
+## 5.1 域的基本概念
+
+### 5.1.1 域的定义
+
+**定义 5.1.1（域）**
+> **域**（field）是一个交换环，且每个非零元都有乘法逆元。
+> 即：$F$ 是域 $\Leftrightarrow$
+> 1. $(F, +)$ 是阿贝尔群
+> 2. $(F^*, \cdot)$ 是阿贝尔群（$F^* = F \setminus \{0\}$）
+> 3. 分配律成立
+
+**例子 5.1.2（常见的域）**
+- $\mathbb{Q}$：有理数域
+- $\mathbb{R}$：实数域
+- $\mathbb{C}$：复数域
+- $\mathbb{F}_p = \mathbb{Z}_p$（$p$ 为素数）：有限域
+- $\mathbb{Q}(i)$：高斯有理数 $\{a + bi \mid a, b \in \mathbb{Q}\}$
+- $\mathbb{Q}(\sqrt{2}) = \{a + b\sqrt{2} \mid a, b \in \mathbb{Q}\}$
+- $k(x)$：有理函数域
+
+**反例 5.1.3（非域）**
+- $\mathbb{Z}$：不是域（$2$ 没有乘法逆元）
+- $\mathbb{Z}_6$：不是域（有零因子）
+
+### 5.1.2 域的特征
+
+**定义 5.1.4（特征）**
+> 域 $F$ 的**特征**（characteristic）是满足 $n \cdot 1 = 0$ 的最小正整数 $n$，记作 $\operatorname{char}(F)$。若不存在这样的 $n$，则 $\operatorname{char}(F) = 0$。
+
+**定理 5.1.5**
+> 若 $\operatorname{char}(F) = p > 0$，则 $p$ 必为素数。
+
+**证明**：若 $n = ab$ 为合数，则 $n \cdot 1 = (a \cdot 1)(b \cdot 1) = 0$，在整环中得 $a \cdot 1 = 0$ 或 $b \cdot 1 = 0$，与最小性矛盾。$\square$
+
+**例子 5.1.6**
+- $\operatorname{char}(\mathbb{Q}) = \operatorname{char}(\mathbb{R}) = \operatorname{char}(\mathbb{C}) = 0$
+- $\operatorname{char}(\mathbb{F}_p) = p$
+- $\operatorname{char}(\mathbb{F}_p[x]) = p$
+
+### 5.1.3 子域与扩域
+
+**定义 5.1.7（子域与扩域）**
+> 若 $K$ 是域 $F$ 的子集，且 $F$ 是域，则称 $F$ 为 $K$ 的**扩域**（extension field），记作 $F/K$ 或 $K \subseteq F$。
+
+**例子 5.1.8**
+- $\mathbb{Q} \subseteq \mathbb{R} \subseteq \mathbb{C}$
+- $\mathbb{Q} \subseteq \mathbb{Q}(\sqrt{2})$：$\sqrt{2}$ 添加到 $\mathbb{Q}$ 得到的扩域
+
+---
+
+## 5.2 代数元与代数扩张
+
+### 5.2.1 代数元
+
+**定义 5.2.1（代数元）**
+> 设 $F \subseteq K$ 是域扩张，$\alpha \in K$。若存在非零多项式 $f(x) \in F[x]$ 使得 $f(\alpha) = 0$，则称 $\alpha$ 是 $F$ 上的**代数元**（algebraic element）。否则称 $\alpha$ 是**超越元**（transcendental element）。
+
+**例子 5.2.2**
+- $\sqrt{2}$ 是 $\mathbb{Q}$ 上的代数元（满足 $x^2 - 2 = 0$）
+- $\pi$ 是 $\mathbb{Q}$ 上的超越元（椭圆函数论中可以证明）
+- $i = \sqrt{-1}$ 是 $\mathbb{Q}$ 上的代数元（满足 $x^2 + 1 = 0$）
+
+**定义 5.2.3（极小多项式）**
+> $\alpha$ 在 $F$ 上的**极小多项式**（minimal polynomial）是满足 $f(\alpha) = 0$ 的首一（最高次系数为 1）不可约多项式 $f(x)$。
+
+**定理 5.2.4**
+> 极小多项式是唯一的，且它是 $F[x]$ 中以 $\alpha$ 为根的首一不可约多项式。
+
+### 5.2.2 代数扩张
+
+**定义 5.2.5（代数扩张）**
+> 若域扩张 $K/F$ 中每个元素都是 $F$ 上的代数元，则称 $K/F$ 为**代数扩张**（algebraic extension）。
+
+**例子 5.2.6**
+- $\mathbb{Q}(\sqrt{2})/\mathbb{Q}$：代数扩张（每个元都是代数元）
+- $\mathbb{R} / \mathbb{Q}$：不是代数扩张（$\pi$ 是超越元）
+
+**定理 5.2.7**
+> 若 $K/F$ 是有限扩张，则 $K/F$ 必为代数扩张。
+
+**证明**：设 $[K : F] = n$，则 $K$ 作为 $F$ 上的向量空间维数为 $n$。取任意 $\alpha \in K$，考虑集合 $\{1, \alpha, \alpha^2, \ldots, \alpha^n\}$，必线性相关，存在不全为零的 $c_i$ 使得 $\sum_{i=0}^n c_i \alpha^i = 0$，故 $\alpha$ 是代数元。$\square$
+
+---
+
+## 5.3 单代数扩张
+
+### 5.3.1 单扩张的构造
+
+**定义 5.3.1（单代数扩张）**
+> 由单个代数元生成的扩张称为**单代数扩张**。
+
+**定理 5.3.2（单代数扩张的结构）**
+> 设 $\alpha$ 是 $F$ 上的代数元，极小多项式为 $f(x)$，$\deg f = n$。则：
+> $$F(\alpha) \cong F[x] / \langle f(x) \rangle$$
+> 且 $\{1, \alpha, \alpha^2, \ldots, \alpha^{n-1}\}$ 是 $F(\alpha)$ 在 $F$ 上的一组基。
+
+**例子 5.3.3**
+- $\mathbb{Q}(\sqrt{2}) \cong \mathbb{Q}[x] / \langle x^2 - 2 \rangle$
+- 基：$\{1, \sqrt{2}\}$
+- $\mathbb{Q}(i) \cong \mathbb{Q}[x] / \langle x^2 + 1 \rangle$
+- $\mathbb{Q}(\sqrt[3]{2}) \cong \mathbb{Q}[x] / \langle x^3 - 2 \rangle$，基：$\{1, \sqrt[3]{2}, \sqrt[3]{4}\}$
+
+### 5.3.2 例子：添加根
+
+**例子 5.3.4**
+将 $\sqrt{2} + \sqrt{3}$ 添加到 $\mathbb{Q}$：
+- 极小多项式：$(x - (\sqrt{2} + \sqrt{3}))(x - (\sqrt{2} - \sqrt{3}))(x + \sqrt{2} - \sqrt{3})(x + \sqrt{2} + \sqrt{3}) = x^4 - 10x^2 + 1$
+- $[\mathbb{Q}(\sqrt{2} +}) : \mathbb \sqrt{3{Q}] = 4$
+
+---
+
+## 5.4 代数扩张的次数
+
+### 5.4.1 次数的定义
+
+**定义 5.4.1（扩张次数）**
+> 若 $K/F$ 是有限维扩张（即 $K$ 作为 $F$ 上的向量空间维数有限），则称 $[K : F] = \dim_F K$ 为**扩张次数**（degree of extension）。
+
+**定理 5.4.2（次数的乘法公式）**
+> 若 $F \subseteq K \subseteq L$ 是域扩张链，则：
+> $$[L : F] = [L : K] \cdot [K : F]$$
+
+**证明**：取 $K$ 在 $F$ 上的基 $\{a_1, \ldots, a_m\}$ 和 $L$ 在 $K$ 上的基 $\{b_1, \ldots, b_n\}$，则 $\{a_i b_j\}$ 是 $L$ 在 $F$ 上的基，元素个数为 $mn$。$\square$
+
+### 5.4.2 代数闭域
+
+**定义 5.4.3（代数闭域）**
+> 若域 $F$ 上任何非常数多项式在 $F$ 中都有根，则称 $F$ 为**代数闭域**（algebraically closed field）。
+
+**例子 5.4.4**
+- $\mathbb{C}$ 是代数闭域（代数基本定理）
+- $\overline{\mathbb{Q}}$（代数数域）是代数闭域
+
+**定义 5.4.5（代数闭包）**
+> $F$ 的**代数闭包** $\bar{F}$ 是包含 $F$ 的最小代数闭域。
+
+---
+
+## 5.5 分裂域
+
+### 5.5.1 分裂域的定义
+
+**定义 5.5.1（分裂域）**
+> 设 $f(x) \in F[x]$ 是非常数多项式。$F$ 的扩域 $E$ 称为 $f$ 的**分裂域**（splitting field），如果：
+> 1. $f(x)$ 在 $E$ 中可以分解为一次因子的乘积：$f(x) = c(x - \alpha_1)\cdots(x - \alpha_n)$
+> 2. $E = F(\alpha_1, \ldots, \alpha_n)$
+
+**例子 5.5.2**
+- $x^2 - 2$ 的分裂域：$\mathbb{Q}(\sqrt{2})$
+- $x^2 + 1$ 的分裂域：$\mathbb{Q}(i)$
+- $x^3 - 2$ 的分裂域：$\mathbb{Q}(\sqrt[3]{2}, \omega)$，其中 $\omega = e^{2\pi i/3}$
+
+### 5.5.2 正规扩张
+
+**定义 5.5.3（正规扩张）**
+> 若 $E/F$ 是代数扩张，且 $F[x]$ 中每个不可约多项式若在 $E$ 中有一个根，则该多项式在 $E$ 中完全分裂，则称 $E/F$ 为**正规扩张**（normal extension）。
+
+**例子 5.5.4**
+- $\mathbb{Q}(\sqrt{2})/\mathbb{Q}$ 是正规的（$x^2 - 2$ 完全分裂）
+- $\mathbb{Q}(\sqrt[3]{2})/\mathbb{Q}$ 不是正规的（$x^3 - 2$ 的另外两个根不在扩域中）
+
+---
+
+## 5.6 可分扩张
+
+### 5.6.1 可分多项式
+
+**定义 5.6.1（可分多项式）**
+> $f(x) \in F[x]$ 称为**可分多项式**（separable polynomial），如果 $f$ 在某个扩域中没有重根。
+
+**例子 5.6.2**
+- $x^2 - 2$ 在 $\mathbb{Q}$ 上是可分的（根为 $\pm\sqrt{2}$，互异）
+- $x^2 - 2$ 在 $\mathbb{F}_2$ 上呢？$x^2 - 2 = x^2$，有重根！
+
+**定义 5.6.3（可分扩张）**
+> 代数扩张 $E/F$ 称为**可分扩张**（separable extension），如果 $E$ 中每个元素都是 $F$ 上某个可分多项式的根。
+
+**定理 5.6.4**
+> 特征 $0$ 的域上的任何代数扩张都是可分的。
+
+**证明**：若 $f$ 是不可分多项式，则 $f$ 与 $f'$ 有公共因子... 在特征 $0$ 下，$f$ 的所有根都是单根。$\square$
+
+### 5.6.2 纯不可分扩张
+
+**定义 5.6.5（纯不可分）**
+> 若 $E/F$ 是代数扩张，且每个 $\alpha \in E \setminus F$ 满足 $\alpha^{p^n} \in F$（$p = \operatorname{char}(F)$），则称为**纯不可分扩张**（purely inseparable extension）。
+
+---
+
+## 5.7 Galois 理论初步
+
+### 5.7.1 Galois 扩张
+
+**定义 5.7.1（Galois 扩张）**
+> 若 $E/F$ 是有限、正规、可分扩张，则称为 **Galois 扩张**。
+
+**例子 5.7.2**
+- $\mathbb{Q}(\sqrt{2})/\mathbb{Q}$：Galois 扩张（正规、可分）
+- $\mathbb{Q}(\sqrt[3]{2})/\mathbb{Q}$：不是 Galois 扩张（不正规）
+- $\mathbb{F}_{p^n}/\mathbb{F}_p$：Galois 扩张
+
+### 5.7.2 Galois 群
+
+**定义 5.7.3（Galois 群）**
+> Galois 扩张 $E/F$ 的 **Galois 群** 是：
+> $$\operatorname{Gal}(E/F) = \{\sigma: E \to E \mid \sigma \text{ 是域自同构}, \sigma|_F = \mathrm{id}\}$$
+
+**例子 5.7.4**
+- $\operatorname{Gal}(\mathbb{Q}(\sqrt{2})/\mathbb{Q}) \cong \mathbb{Z}_2$：由恒等映射和 $\sqrt{2} \mapsto -\sqrt{2}$ 组成
+- $\operatorname{Gal}(\mathbb{Q}(i)/\mathbb{Q}) \cong \mathbb{Z}_2$：$i \mapsto i$ 和 $i \mapsto -i$
+
+### 5.7.3 Galois 对应
+
+**定理 5.7.5（Galois 基本定理）**
+> 设 $E/F$ 是 Galois 扩张，$G = \operatorname{Gal}(E/F)$。则存在一一对应：
+> $$\{\text{F 的中间域}\} \leftrightarrow \{\text{G 的子群}\}$$
+> $$K \mapsto \operatorname{Gal}(E/K)$$
+> $$F^H = \{\alpha \in E \mid h(\alpha) = \alpha, \forall h \in H\} \leftarrow H$$
+
+**例子 5.7.6**
+- $\mathbb{Q}(\sqrt{2}, \sqrt{3})/\mathbb{Q}$：$[\mathbb{Q}(\sqrt{2}, \sqrt{3}) : \mathbb{Q}] = 4$
+- Galois 群：$\operatorname{Gal}(\mathbb{Q}(\sqrt{2}, \sqrt{3})/\mathbb{Q}) \cong \mathbb{Z}_2 \times \mathbb{Z}_2$
+- 对应关系：
+  - $\mathbb{Q}$ ↔ 全群
+  - $\mathbb{Q}(\sqrt{2})$ ↔ $\{id, \sqrt{3} \mapsto -\sqrt{3}\}$
+  - $\mathbb{Q}(\sqrt{3})$ ↔ $\{id, \sqrt{2} \mapsto -\sqrt{2}\}$
+  - $\mathbb{Q}(\sqrt{6})$ ↔ $\{id, \sqrt{2} \mapsto -\sqrt{2}, \sqrt{3} \mapsto -\sqrt{3}\}$
+  - $\mathbb{Q}(\sqrt{2}, \sqrt{3})$ ↔ $\{id\}$
+
+---
+
+## 5.8 有限域
+
+### 5.8.1 有限域的结构
+
+**定理 5.8.1**
+> 有限域的阶必为素数的幂：$|\mathbb{F}_q| = q = p^n$，其中 $p$ 为素数，$n \geq 1$。
+
+**定理 5.8.2**
+> 同阶的有限域必同构。记 $p^n$ 阶域为 $\mathbb{F}_{p^n}$ 或 $\mathbb{F}_q$。
+
+**例子 5.8.3**
+- $\mathbb{F}_2 = \mathbb{Z}_2$
+- $\mathbb{F}_4$：$x^2 + x + 1$ 在 $\mathbb{F}_2$ 上的分裂域
+
+### 5.8.2 有限域的子域
+
+**定理 5.8.4**
+> $\mathbb{F}_{p^n}$ 的子域个数等于 $n$ 的正因子个数，且子域阶为 $p^d$，其中 $d \mid n$。
+
+**例子 5.8.5**
+- $\mathbb{F}_{2^4}$ 的子域：$\mathbb{F}_2$, $\mathbb{F}_{2^2} \cong \mathbb{F}_4$, $\mathbb{F}_{2^4}$
+
+---
+
+## 5.9 圆域与分圆域
+
+### 5.9.1 单位根
+
+**定义 5.9.1（单位根）**
+> 若 $\zeta^n = 1$，则 $\zeta$ 称为 **$n$ 次单位根**。若 $n$ 次单位根且 $\zeta^k \neq 1$ 对所有 $1 \leq k < n$ 成立，则称为 **本原单位根**。
+
+**例子 5.9.2**
+- 在 $\mathbb{C}$ 中，$e^{2\pi i / n}$ 是本原 $n$ 次单位根
+
+### 5.9.2 分圆域
+
+**定义 5.9.3（分圆域）**
+> 添加所有 $n$ 次单位根到 $\mathbb{Q}$ 得到的扩域称为 **$n$ 次分圆域**，记作 $\mathbb{Q}(\zeta_n)$。
+
+**定理 5.9.4**
+> $$[\mathbb{Q}(\zeta_n) : \mathbb{Q}] = \varphi(n)$$
+> 其中 $\varphi$ 是欧拉函数。
+
+**例子 5.9.5**
+- $\mathbb{Q}(i)$：$n=4$，$[\mathbb{Q}(i) : \mathbb{Q}] = \varphi(4) = 2$
+- $\mathbb{Q}(\zeta_3) = \mathbb{Q}(\sqrt{-3})$：$[\mathbb{Q}(\zeta_3) : \mathbb{Q}] = \varphi(3) = 2$
+
+---
+
+## 5.10 习题
+
+### 基础题
+
+1. 证明：$\mathbb{Q}(\sqrt{2}) \cong \mathbb{Q}[x] / \langle x^2 - 2 \rangle$。
+
+2. 求 $[\mathbb{Q}(\sqrt{2}, \sqrt{3}) : \mathbb{Q}]$，并给出一组基。
+
+3. 判断 $\mathbb{Q}(\sqrt[3]{2})/\mathbb{Q}$ 是否为正规扩张。
+
+4. 找出 $x^4 - 5x^2 + 6$ 的分裂域。
+
+5. 计算 $\operatorname{Gal}(\mathbb{Q}(\sqrt{2})/\mathbb{Q})$。
+
+### 进阶题
+
+6. 证明：特征 $p$ 的有限域是完美域（perfect），即每个代数扩张都是可分的。
+
+7. 描述 $\mathbb{Q}(\sqrt[3]{2}, \omega)/\mathbb{Q}$ 的 Galois 群结构。
+
+8. 证明：$\mathbb{Q}(\zeta_n)/\mathbb{Q}$ 是 Galois 扩张，其 Galois 群同构于 $(\mathbb{Z}/n\mathbb{Z})^*$。
+
+9. 探索：了解阿贝尔扩张的基本思想（Kronecker-Weber 定理）。
+
+10. 证明：$[\mathbb{Q}(\zeta_n) : \mathbb{Q}] = \varphi(n)$。
+
+### 挑战题
+
+11. **证明 Galois 基本定理** 的一个方向：中间域对应子群。
+
+12. 探索：了解五次方程不可解性的证明思路（Galois 理论的应用）。
+
+13. **编程**：实现有限域 $\mathbb{F}_p$ 上多项式的分解算法。
+
+---
+
+## 5.11 本章小结
+
+### 核心概念
+
+| 概念 | 符号 | 含义 |
+|------|------|------|
+| 域 | $F$ | 每个非零元可逆的交换环 |
+| 特征 | $\operatorname{char}(F)$ | $n \cdot 1 = 0$ 的最小 $n$ |
+| 代数元 | $\alpha$ | 满足某个多项式方程 |
+| 极小多项式 | $m_\alpha(x)$ | 首一不可约多项式 |
+| 代数扩张 | $K/F$ | 每个元都是代数的 |
+| 分裂域 | $E$ | 多项式完全分裂的最小扩域 |
+| Galois 群 | $\operatorname{Gal}(E/F)$ | 域自同构群 |
+
+### 重要定理
+
+1. **单代数扩张结构**：$F(\alpha) \cong F[x]/\langle m_\alpha(x)\rangle$
+2. **次数乘法公式**：$[L : F] = [L : K] \cdot [K : F]$
+3. **特征 $0$ 域上代数扩张都可分**
+4. **Galois 基本定理**：中间域 ↔ 子群
+5. **有限域阶**：$p^n$
+6. **分圆域次数**：$[\mathbb{Q}(\zeta_n) : \mathbb{Q}] = \varphi(n)$
+
+---
+
+## 5.12 参考文献
+
+1. **Lang, S.** *Algebra*. Springer, 2002.
+2. **Milne, J. S.** *Algebraic Number Theory*. Available online, 2017.
+3. **Stewart, I.** *Galois Theory*. Chapman and Hall/CRC, 2015.
+4. **Marcus, D. A.** *Number Fields*. Springer, 1977.
+5. **冯克勤**。《域与Galois理论》. 科学出版社, 2003.
