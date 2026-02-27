@@ -1,0 +1,49 @@
+---
+title: 第17章 数论应用
+description: 费马最后定理、BSD猜想、L函数
+section: 1
+---
+
+# 第十七章：数论应用——代数几何与数论的交汇
+
+> **本章导读**：代数几何与数论的交汇是 20 世纪数学最辉煌的成就之一。Fermat 最后定理的证明、BSD 猜想等都是这一交汇的典型代表。本章将介绍这些深刻的联系。
+
+---
+
+## 17.1 费马最后定理
+
+### 17.1.1 历史
+
+**定理 17.1.1（费马最后定理）**
+> 当 $n > 2$ 时，方程 $x^n + y^n = z^n$ 没有非零整数解。
+
+**证明**（Wiles, 1994）：使用椭圆曲线和模形式的联系。
+
+---
+
+## 17.2 Birch and Swinnerton-Dyer 猜想
+
+### 17.2.1 BSD 猜想
+
+**猜想 17.2.1（BSD）**
+> 对椭圆曲线 $E/\mathbb{Q}$：
+> - $L(E, s)$ 在 $s=1$ 的阶等于 $\text{rank}(E(\mathbb{Q}))$
+> - 首项系数与算术不变量有关
+
+---
+
+## 17.3 L 函数
+
+### 17.3.1 L 函数
+
+**定义 17.3.1**
+> 椭圆曲线的 **L 函数**是：
+> $$L(E, s) = \prod_{p \nmid N} (1 - a_p p^{-s} + p^{1-2s})^{-1} \prod_{p \mid N} (1 - a_p p^{-s})^{-1}$$
+
+---
+
+## 17.4 参考文献
+
+1. **Silverman, J. H.** *The Arithmetic of Elliptic Curves*. Springer, 2009.
+2. **Cornell, G., Silverman, J. H.** *Arithmetic Geometry*. Springer, 1986.
+3. **Wiles, A.** *Modular elliptic curves and Fermat's Last Theorem*. Annals of Math, 1995.
