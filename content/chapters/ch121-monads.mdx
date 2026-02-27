@@ -1,0 +1,143 @@
+---
+title: 第121章 范畴论进阶：单子与余单体
+description: 深入理解单子理论
+section: 1
+---
+
+# 第一百二十一章：范畴论进阶——单子理论
+
+> **本章导读**：单子（Monad）是范畴论中极为重要的概念，它统一了代数学与计算机科学中的多种结构。本章将深入探讨单子的理论及其应用。
+
+---
+
+## 121.1 单子的定义与基本性质
+
+### 121.1.1 什么是一个单子？
+
+**定义 121.1.1（单子）**
+> 设 $\mathcal{C}$ 是一个范畴，**单子**（Monad）是一个三元组 $(T, \eta, \mu)$，其中：
+> 1. $T: \mathcal{C} \to \mathcal{C}$ 是一个函子
+> 2. $\eta: \text{Id}_{\mathcal{C}} \Rightarrow T$ 是单位自然变换
+> 3. $\mu: T^2 \Rightarrow T$ 是乘法自然变换
+> 
+> 并且满足以下相容性条件：
+> - **结合律**：$\mu \circ T\mu = \mu \circ \mu_T$
+> - **单位律**：$\mu \circ \eta_T = \text{id}_T = \mu \circ T\eta$
+
+这里的记号 $T\mu$ 表示用 $T$ 作用在 $\mu$ 上得到的自然变换，$\eta_T$ 表示用 $\eta$ 与 $T$ 复合。
+
+### 121.1.2 单子的例子
+
+**例子 121.1.2（自由单子）**
+> 设 $\mathcal{C} = \mathbf{Set}$，$A$ 是一个集合。定义 $T_A(X) = A \times X$，即与 $A$ 的笛卡尔积。
+> - 单位 $\eta_X: X \to A \times X$ 由 $\eta_X(x) = (*, x)$ 给出（这里 $*$ 是某个固定元素）
+> - 乘法 $\mu_X: A \times (A \times X) \to A \times X$ 由 $\mu_X(a, (a', x)) = (a, x)$ 给出
+> 
+> 这构成了一个单子，称为**集合上的乘法单子**。
+
+**例子 121.1.3（幂集单子）**
+> 在集合范畴中，定义 $T(X) = \mathscr{P}(X)$ 为幂集函子。
+> - 单位 $\eta_X: X \to \mathscr{P}(X)$ 将 $x$ 映射到 $\{x\}$
+> - 并集给出乘法 $\mu_X: \mathscr{P}(\mathscr{P}(X)) \to \mathscr{P}(X)$
+> 
+> 这就是著名的**幂集单子**，在理论计算机科学中有重要应用。
+
+**例子 121.1.4（阿贝尔群单子）**
+> 设 $\mathcal{C} = \mathbf{Ab}$（阿贝尔群范畴）。包含函子 $U: \mathbf{Ab} \to \mathbf{Set}$遗忘结构，其左伴随 $F: \mathbf{Set} \to \mathbf{Ab}$ 是自由阿贝尔群构造。
+> 
+> 伴随对 $(F, U)$ 诱导一个单子 $T = U \circ F$ 在 $\mathbf{Set}$ 上：
+> - $T(X) = \mathbb{Z}^{(X)}$，即以 $X$ 为基的自由阿benius群
+> - 这给出了整数自由模的单子
+
+### 121.1.3 单子的范畴
+
+**定义 121.1.5（单手范畴）**
+> 给定范畴 $\mathcal{C}$，**单子范畴** $\text{Mnd}(\mathcal{C})$ 的对象是 $\mathcal{C}$ 上的单子，态射是保持单位与乘法的自然变换。
+
+**命题 121.1.6**
+> 单子范畴 $\text{Mnd}(\mathcal{C})$ 是范畴论研究的重要对象，它本身是一个 2-范畴。
+
+---
+
+## 121.2 代数与单子
+
+### 121.2.1 $T$-代数的定义
+
+**定义 121.2.1（$T$-代数）**
+> 给定单子 $(T, \eta, \mu)$，一个 **$T$-代数** $(A, a)$ 包括：
+> - 对象 $A \in \mathcal{C}$
+> - 结构映射 $a: T(A) \to A$
+> 
+> 满足：
+> 1. **单位相容性**：$a \circ \eta_A = \text{id}_A$
+> 2. **结合相容性**：$a \circ \mu_A = a \circ T(a)$
+
+**例子 121.2.2（群作为单子代数）**
+> 设 $T(X) = X \times X$ 在集合范畴上，结构映射 $m: X \times X \to X$ 给出**广群结构**。当满足额外条件时，这给出群结构。
+
+### 121.2.2 自由代数
+
+**定理 121.2.3（自由代数函子）**
+> 给定单手 $(T, \eta, \mu)$，存在遗忘函子 $U^T: \text{Alg}(T) \to \mathcal{C}$，它有一个左伴随 $F^T$，将对象 $A \in \mathcal{C}$ 映射到自由 $T$-代数 $T(A)$ 带有标准结构映射。
+
+**证明**：
+> 定义 $F^T(A) = (T(A), \mu_A)$。需要验证这确实是 $T$-代数：
+> - 单位相容性：$\mu_A \circ \eta_{T(A)} = \text{id}_{T(A)}$ 由单子的单位律
+> - 结合相容性：$\mu_A \circ \mu_{T(A)} = \mu_A \circ T(\mu_A)$ 由单子的结合律
+> 
+> 然后验证泛性质即可完成证明。$\square$
+
+---
+
+## 121.3 单子与范畴的表示
+
+### 121.3.1 Kleisli范畴
+
+**定义 121.3.1（Kleisli范畴）**
+> 给定单子 $(T, \eta, \mu)$，**Kleisli范畴** $\mathcal{C}_T$ 定义为：
+> - 对象：与 $\mathcal{C}$ 相同
+> - 态射 $A \to B$：$\mathcal{C}$ 中的态射 $A \to T(B)$
+> - 合成：$f: A \to T(B)$ 与 $g: B \to T(C)$ 的合成是 $\mu_C \circ T(g) \circ f$
+> - 单位：$\eta_A: A \to T(A)$
+
+**定理 121.3.2（Kleisli嵌入）**
+> 存在范畴嵌入 $I: \mathcal{C} \to \mathcal{C}_T$，并且伴随对 $(F, U)$ 给出 $\mathcal{C}$ 是 $\mathcal{C}_T$ 的反射子范畴。
+
+### 121.3.2 Eilenberg-Moore范畴
+
+**定义 121.3.3（Eilenberg-Moore范畴）**
+> 给定单子 $(T, \eta, \mu)$，**Eilenberg-Moore范畴** $\mathcal{C}^T$ 是 $T$-代数的范畴。
+
+**定理 121.3.4（通用性质）**
+> 遗忘函子 $U^T: \mathcal{C}^T \to \mathcal{C}$ 有一个左伴随 $F^T$，并且 $\mathcal{C}^T$ 是 $\mathcal{C}_T$ 的余反射完备化。
+
+---
+
+## 121.4 单子的应用
+
+### 121.4.1 在计算机科学中的应用
+
+**例子：状态单子**
+> 在 Haskell 等函数式编程语言中，状态单子 $S \Rightarrow (A \times S)$ 用于模拟带状态的计算。这是单子理论在编程语言理论中的典型应用。
+
+### 121.4.2 在代数中的应用
+
+**例子：环的单子**
+> 环 $R$ 可以看作集合上的一个单子，其结构映射对应环的乘法与单位。
+
+---
+
+## 121.5 习题
+
+1. 验证幂集单子的单位与乘法满足单手公理。
+2. 描述群范畴上的单子结构。
+3. 证明 Kleisli 范畴的合成是良好定义的。
+4. 构造自由阿贝尔群单手的 $T$-代数范畴。
+
+---
+
+## 121.6 参考文献
+
+1. **Mac Lane, S.** *Categories for the Working Mathematician*. Springer, 1978.
+2. **Barr, M., Wells, C.** *Category Theory for Computing Science*. Prentice Hall, 1990.
+3. **Moggi, E.** *Notions of Computation and Monads*. Information and Computation, 1991.
