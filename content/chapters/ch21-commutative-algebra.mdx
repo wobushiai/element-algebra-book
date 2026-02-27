@@ -1,0 +1,134 @@
+---
+title: 第21章 交换代数进阶
+description: Noetherian环、Artin环、维数理论、完备化
+section: 1
+---
+
+# 第二十一章：交换代数进阶——代数几何的代数基础
+
+> **本章导读**：交换代数是代数几何的代数基础。Grothendieck 将代数几何问题转化为交换代数问题，使得许多几何问题可以得到深刻的代数处理。本章将介绍 Noetherian 环、维数理论、完备化等进阶内容。
+
+---
+
+## 21.1 Noetherian 环
+
+### 21.1.1 定义
+
+**定义 21.1.1（Noetherian 环）**
+> 环 $R$ 称为 **Noetherian 环**，如果满足以下任一条件：
+> - 任意理想升链稳定（ascending chain condition, ACC）
+> - 任意理想是有限生成的
+
+**例子 21.1.2**
+- $\mathbb{Z}$ 是 Noetherian
+- $k[x_1, \ldots, x_n]$ 是 Noetherian（Hilbert 基定理）
+- 任意主理想环是 Noetherian
+
+### 21.1.2 Hilbert 基定理
+
+**定理 21.1.3（Hilbert 基定理）**
+> 若 $R$ 是 Noetherian，则 $R[x]$ 也是 Noetherian。
+
+**推论**：$k[x_1, \ldots, x_n]$ 是 Noetherian。
+
+---
+
+## 21.2 Artin 环
+
+### 21.2.1 定义
+
+**定义 21.2.1（Artin 环）**
+> 环 $R$ 称为 **Artin 环**，如果满足降链条件（descending chain condition, DCC）：任意理想降链稳定。
+
+**定理 21.2.2**
+> Artin 环是 Noetherian 环。
+
+---
+
+## 21.3 维数理论
+
+### 21.3.1 Krull 维数
+
+**定义 21.3.1（Krull 维数）**
+> 环 $R$ 的 **Krull 维数** $\dim R$ 是素理想链的最大长度：
+> $$\dim R = \sup \{n \mid \mathfrak{p}_0 \subset \mathfrak{p}_1 \subset \cdots \subset \mathfrak{p}_n\}$$
+
+**例子 21.3.2**
+- $\dim \mathbb{Z} = 1$
+- $\dim k[x] = 1$
+- $\dim k[x_1, \ldots, x_n] = n$
+
+### 21.3.2 超越维数
+
+**定义 21.3.3（超越维数）**
+> 域扩张 $K/k$ 的 **超越维数**（transcendence degree）是代数独立生成元的最大个数。
+
+---
+
+## 21.4 完备化
+
+###.1 m 21.4-adic 完备化
+
+**定义 21.4.1（完备化）**
+> 给定 Noetherian 局部环 $(R, \mathfrak{m})$，其 **$\mathfrak{m}$-adic 完备化**是：
+> $$\hat{R} = \varprojlim R/\mathfrak{m}^n$$
+
+**例子 21.4.2**
+- $\hat{\mathbb{Z}}_p = \mathbb{Z}_p$
+- $\hat{k[x]}_{(x)} = k[[x]]$（形式幂级数环）
+
+### 21.4.2 Hensel 引理
+
+**定理 21.4.3（Hensel 引理）**
+> 设 $(R, \mathfrak{m})$ 是完备局部环，$f \in R[x]$。若 $f$ 有简单根 $\bar{a} \in R/\mathfrak{m}$，则存在唯一 $a \in R$ 使得 $f(a) = 0$ 且 $a \equiv \bar{a} \pmod{\mathfrak{m}}$。
+
+---
+
+## 21.5 习题
+
+### 基础题
+
+1. 证明 $\mathbb{Z}$ 是 Noetherian 环。
+
+2. 计算 $k[x,y]/(xy)$ 的维数。
+
+3. 描述 $\mathbb{Z}$ 的完备化。
+
+4. 验证 Hensel 引理在 $\mathbb{Z}_p$ 上的例子。
+
+5. 证明 Hilbert 基定理。
+
+### 进阶题
+
+6. **证明**：Noetherian 环的商环是 Noetherian。
+
+7. 探索：了解 Associated Prime 的概念。
+
+8. **证明**：维数公式 $\dim R/I + \dim R = \dim R$。
+
+9. 了解 Cohen 结构定理。
+
+10. 探索：正规环（normal ring）的定义。
+
+---
+
+## 21.6 本章小结
+
+### 核心概念
+
+| 概念 | 符号 | 含义 |
+|------|------|------|
+| Noetherian 环 | ACC | 理想升链稳定 |
+| Artin 环 | DCC | 理想降链稳定 |
+| Krull 维数 | $\dim R$ | 素理想链的最大长度 |
+| 完备化 | $\hat{R}$ | $\mathfrak{m}$-adic 极限 |
+| Hensel 引理 | - | 提升简单根 |
+
+---
+
+## 21.7 参考文献
+
+1. **Atiyah, M. F., MacDonald, I. G.** *Introduction to Commutative Algebra*. Addison-Wesley, 1969.
+2. **Matsumura, H.** *Commutative Ring Theory*. Cambridge University Press, 1989.
+3. **Eisenbud, D.** *Commutative Algebra with a View Toward Algebraic Geometry*. Springer, 1995.
+4. **Bourbaki, N.** *Commutative Algebra*. Springer, 1989.

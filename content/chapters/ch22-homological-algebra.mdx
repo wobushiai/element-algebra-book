@@ -1,0 +1,67 @@
+---
+title: 第22章 同调代数进阶
+description: Ext、Tor、谱序列、导出范畴
+section: 1
+---
+
+# 第二十二章：同调代数进阶——层的深度理论
+
+> **本章导读**：同调代数是代数几何和拓扑学的核心工具。本章将介绍 Ext、Tor、谱序列等进阶概念，以及它们在代数几何中的应用。
+
+---
+
+## 22.1 Ext 群
+
+### 22.1.1 定义
+
+**定义 22.1.1（Ext 群）**
+> 给定 $R$-模 $A, B$，**Ext** 群定义为：
+> $$\text{Ext}^i_R(A, B) = H^i(\text{Hom}_R(P^\bullet, B))$$
+> 其中 $P^\bullet$ 是 $A$ 的投射分解。
+
+### 22.1.2 性质
+
+**定理 22.1.2**
+> $\text{Ext}^1_R(A, B)$ 参数化 $A$ 到 $B$ 的扩张。
+
+---
+
+## 22.2 Tor 群
+
+### 22.2.1 定义
+
+**定义 22.2.1（Tor 群）**
+> 给定 $R$-模 $A, B$，**Tor** 群定义为：
+> $$\text{Tor}_i^R(A, B) = H_i(A \otimes_R P^\bullet)$$
+> 其中 $P^\bullet$ 是 $B$ 的投射分解。
+
+### 22.2.2 例子
+
+**例子 22.2.2**
+> $\text{Tor}_1^\mathbb{Z}(\mathbb{Z}_n, \mathbb{Z}_m) = \mathbb{Z}_{\gcd(n,m)}$
+
+---
+
+## 22.3 谱序列
+
+### 22.3.1 滤链与谱序列
+
+**定义 22.3.1（谱序列）**
+> **谱序列**是计算导出函子的强大工具，通常记作 $E^{p,q}_r \Rightarrow H^{p+q}$。
+
+---
+
+## 22.4 导出范畴
+
+### 22.4.1 复习与深化
+
+**定理 22.4.1**
+> $D(R) \cong K(R)$ 局部化。
+
+---
+
+## 22.5 参考文献
+
+1. **Weibel, C. A.** *An Introduction to Homological Algebra*. Cambridge University Press, 1994.
+2. **Rotman, J. J.** *An Introduction to Homological Algebra*. Springer, 2009.
+3. **Gelfand, S. I., Manin, Y. I.** *Methods of Homological Algebra*. Springer, 2003.
